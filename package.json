@@ -23,10 +23,11 @@
     "expo-asset": "~8.1.0",
     "expo-constants": "~9.0.0",
     "expo-font": "~8.1.0",
+    "expo-linear-gradient": "^8.1.0",
     "expo-linking": "^1.0.1",
     "expo-splash-screen": "^0.2.3",
     "expo-web-browser": "~8.2.0",
-    "materialize-css": "^1.0.0-rc.2",
+    "formik": "^2.1.4",
     "native-base": "2.13.8",
     "react": "~16.9.0",
     "react-devtools": "^3.6.3",
@@ -35,19 +36,25 @@
     "react-native-elements": "^2.0.0",
     "react-native-gesture-handler": "~1.6.0",
     "react-native-navigation": "^6.6.2",
+    "react-native-reanimated": "~1.7.0",
     "react-native-safe-area-context": "0.7.3",
     "react-native-screens": "~2.2.0",
     "react-native-vector-icons": "^6.6.0",
     "react-native-web": "~0.11.7",
+    "react-navigation": "^4.3.9",
+    "react-navigation-drawer": "^2.4.13",
+    "react-navigation-header-buttons": "^4.0.2",
+    "react-navigation-stack": "^2.5.1",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "validate.js": "^0.13.1"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
     "babel-preset-expo": "~8.1.0",
     "jest-expo": "~37.0.0"
   },
-  "private": true
+  "proxy": "https://715543cb1c2c.ngrok.io"
 }

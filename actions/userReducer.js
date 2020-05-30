@@ -54,12 +54,13 @@ export default (state = initialState, action) => {
         loading: false,
       };
     case LOGIN:
+      console.log("payload", action.payload);
       AsyncStorage.setItem("token", action.payload.token);
-      loadUser();
+      // loadUser();
       return {
         ...state,
+        token: action.payload.token,
         user: action.payload.user,
-        organization: action.payload.orgReturn,
         loggedIn: true,
         loading: false,
       };

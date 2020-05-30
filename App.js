@@ -1,5 +1,3 @@
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
 import {
   Platform,
@@ -8,15 +6,15 @@ import {
   View,
   AsyncStorage,
 } from "react-native";
+import { enableScreens } from "react-native-screens";
 import setAuthToken from "./setToken";
 import { Provider } from "react-redux";
 import store from "./store";
-import Navbar from "./components/Navbar";
 import OverLayLanding from "./components/OverLayLanding";
-
+import EventUserNavigator from "./navigation/EventNavigation";
 import useCachedResources from "./hooks/useCachedResources";
 
-const Stack = createStackNavigator();
+enableScreens();
 
 export default function App(props) {
   const isLoadingComplete = useCachedResources();
@@ -28,10 +26,7 @@ export default function App(props) {
   } else {
     return (
       <Provider store={store}>
-        <View style={styles.container}>
-          <Navbar />
-          <OverLayLanding />
-        </View>
+        <EventUserNavigator />
       </Provider>
     );
   }

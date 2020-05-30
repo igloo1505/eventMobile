@@ -8,9 +8,10 @@ import {
   CHANGE_VIEW,
   LOGOUT,
 } from "./Types";
-
+import appConstants from "../constants/AppConstants";
 import axios from "axios";
 import setAuthToken from "../setToken";
+import { AsyncStorage } from "react-native";
 
 const config = {
   headers: {
@@ -18,7 +19,7 @@ const config = {
   },
 };
 export const loadUser = () => async (dispatch) => {
-  setAuthToken(localStorage.token);
+  setAuthToken(AsyncStorage.token);
   try {
     const res = await axios.get("/auth");
     dispatch({
@@ -26,13 +27,13 @@ export const loadUser = () => async (dispatch) => {
       payload: res.data,
     });
   } catch (err) {
+    console.error(err);
     dispatch({ type: USER_ERROR, payload: err });
   }
 };
 
 export const setNewUser = (user) => async (dispatch) => {
   setLoading();
-
   try {
     const res = await axios.post("/users", user, config);
 
@@ -69,17 +70,24 @@ export const editUserAccess = ({ orgInfo }) => async (dispatch) => {
 };
 
 export const loginUser = (user) => async (dispatch) => {
+  console.log("logging in as ", user);
   try {
-    const res = await axios.post("/auth", user, config);
+    console.log("serverRoot", `${appConstants.serverRoot}/auth`);
+    const res = await axios.post(
+      `${appConstants.serverRoot}/auth`,
+      user,
+      config
+    );
     dispatch({
       type: LOGIN,
       payload: res.data,
     });
-    loadUser();
+    // loadUser();
   } catch (err) {
+    console.error(err);
     dispatch({
       type: USER_ERROR,
-      payload: err.msg,
+      payload: err,
     });
   }
 };
