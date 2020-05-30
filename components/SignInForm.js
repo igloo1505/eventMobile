@@ -43,6 +43,7 @@ const SignInForm = ({ user, loginUser }) => {
         width: "100%",
         height: "100%",
       }}
+      enabled="true"
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ScrollView contentContainerStyle={{ flex: 1, alignContent: "center" }}>
