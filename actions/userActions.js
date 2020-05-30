@@ -7,6 +7,7 @@ import {
   REGISTER_ADMIN,
   CHANGE_VIEW,
   LOGOUT,
+  TRIED_AUTO_LOGIN,
 } from "./Types";
 import appConstants from "../constants/AppConstants";
 import axios from "axios";
@@ -30,6 +31,10 @@ export const loadUser = () => async (dispatch) => {
     console.error(err);
     dispatch({ type: USER_ERROR, payload: err });
   }
+};
+
+export const setTriedAutoLogin = () => {
+  dispatch({ type: TRIED_AUTO_LOGIN });
 };
 
 export const setNewUser = (user) => async (dispatch) => {

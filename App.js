@@ -7,30 +7,41 @@ import {
   AsyncStorage,
 } from "react-native";
 import { enableScreens } from "react-native-screens";
+import AuthScreen from "./screens/AuthScreen";
+import ViewEvents from "./screens/ViewEvents";
+import { connect } from "react-redux";
 import setAuthToken from "./setToken";
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 import store from "./store";
 import OverLayLanding from "./components/OverLayLanding";
-import EventUserNavigator from "./navigation/EventNavigation";
+import { AuthenticatedNavOptions, LoginDrawer } from "./constants/AppConstants";
+import Colors from "./constants/Colors";
+import { NavigationContainer } from "@react-navigation/native";
+
+import { LinearGradient } from "expo-linear-gradient";
 import useCachedResources from "./hooks/useCachedResources";
+import NavigationTree, {
+  NavigationSwitcher,
+} from "./navigation/NavigationTree";
 
 enableScreens();
 
-export default function App(props) {
+const App = () => {
   const isLoadingComplete = useCachedResources();
   if (AsyncStorage.token) {
     setAuthToken(AsyncStorage.token);
   }
+
   if (!isLoadingComplete) {
     return null;
   } else {
     return (
       <Provider store={store}>
-        <EventUserNavigator />
+        <NavigationSwitcher />
       </Provider>
     );
   }
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -38,3 +49,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
 });
+
+const mapStateToProps = (state) => ({
+  user: state.user,
+});
+
+export default App;

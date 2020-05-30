@@ -31,3 +31,4 @@ export const CLEAR_IMAGE = "CLEAR_IMAGE";
 export const GAME_FINISH = "GAME_FINISH";
 export const RESET_GAME_FINISH = "RESET_GAME_FINISH";
 export const TOGGLE_OVERLAY = "TOGGLE_OVERLAY";
+export const TRIED_AUTO_LOGIN = "TRIED_AUTO_LOGIN";

@@ -23,7 +23,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 // TODO go back and fix errorMessage so it conditionally renders. Right now if uncommented it shows up regardless
 
-const SignInForm = ({ user, loginUser }) => {
+const SignInForm = ({ user, loginUser }, props) => {
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
 
@@ -32,6 +32,7 @@ const SignInForm = ({ user, loginUser }) => {
     console.log("Login User", User);
     loginUser(User);
   };
+  console.log("props", props);
 
   return (
     <KeyboardAvoidingView

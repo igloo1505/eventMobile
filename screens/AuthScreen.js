@@ -22,16 +22,24 @@ import Colors from "../constants/Colors";
 
 // TODO go back and fix errorMessage so it conditionally renders. Right now if uncommented it shows up regardless
 
-const AuthScreen = ({ user, loginUser }) => {
+const AuthScreen = ({ user, props, loginUser }) => {
+  // console.log("props!!! \r\n\r\n", JSON.stringify(props));
+  // console.log("navigation \r\n\r\n", props.navigation.actions.navigate);
   let [signUp, setSignUp] = useState(false);
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
 
-  const handleSubmit = () => {
-    let User = { email, password };
-    console.log("Login User", User);
-    loginUser(User);
-  };
+  // const handleSubmit = async () => {
+  //   let User = { email, password };
+  //   console.log("Login User", User);
+  //   try {
+  //     await loginUser(User);
+  //     // props.navigation.navigate("main");
+  //     props.navigation.actions.navigate("main");
+  //   } catch (error) {
+  //     console.error("error occured");
+  //   }
+  // };
 
   return (
     <View style={styles.mainView}>
@@ -45,13 +53,13 @@ const AuthScreen = ({ user, loginUser }) => {
   );
 };
 
-AuthScreen.navigationOptions = {
-  headerTitle: "Event Driven MKE",
-  headerStyle: {
-    backgroundColor: Colors.primaryColor,
-  },
-  headerTintColor: Colors.textColor,
-};
+// AuthScreen.navigationOptions = {
+//   headerTitle: "Event Driven MKE",
+//   headerStyle: {
+//     backgroundColor: Colors.primaryColor,
+//   },
+//   headerTintColor: Colors.textColor,
+// };
 
 const styles = StyleSheet.create({
   mainView: {
@@ -68,8 +76,9 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state, ownProps) => ({
   user: state.user,
+  props: ownProps,
 });
 
-export default AuthScreen;
+export default connect(mapStateToProps)(AuthScreen);

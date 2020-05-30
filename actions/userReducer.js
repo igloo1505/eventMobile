@@ -6,8 +6,10 @@ import {
   REGISTER_ADMIN,
   CHANGE_VIEW,
   LOGOUT,
+  TRIED_AUTO_LOGIN,
   AUTHENTICATED,
 } from "./Types";
+
 import { loadUser } from "./userActions";
 import setAuthToken from "../setToken";
 import { AsyncStorage } from "react-native";
@@ -19,6 +21,7 @@ const initialState = {
   loading: false,
   admin: false,
   user: null,
+  triedAutoLogin: null,
   error: null,
 };
 
@@ -53,15 +56,22 @@ export default (state = initialState, action) => {
         loggedIn: true,
         loading: false,
       };
+    case TRIED_AUTO_LOGIN:
+      return {
+        ...state,
+        triedAutoLogin: true,
+      };
     case LOGIN:
       console.log("payload", action.payload);
       AsyncStorage.setItem("token", action.payload.token);
       // loadUser();
+
       return {
         ...state,
         token: action.payload.token,
         user: action.payload.user,
         loggedIn: true,
+        triedAutoLogin: true,
         loading: false,
       };
 

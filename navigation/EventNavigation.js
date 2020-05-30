@@ -5,6 +5,7 @@ import {
   createSwitchNavigator,
 } from "react-navigation";
 import { createDrawerNavigator } from "react-navigation-drawer";
+import store from "../store";
 import Landing from "../screens/Landing";
 import ViewEvents from "../screens/ViewEvents";
 import Colors from "../constants/Colors";
@@ -35,9 +36,9 @@ const AuthNavigator = createStackNavigator({
   auth: AuthScreen,
 });
 
-const MainNavigator = createSwitchNavigator({
+let MainNavigator = createSwitchNavigator({
   auth: AuthNavigator,
-  main: mainNavigator,
+  main: EventUserNavigator,
 });
 
 // NOTEWORTHY createAppContainer must be used to export default stack, exporting it alone will cause endless bugs
