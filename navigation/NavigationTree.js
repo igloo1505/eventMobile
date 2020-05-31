@@ -1,11 +1,14 @@
 import React from "react";
 import Landing from "../screens/Landing";
 import { View, Text, Button, SafeAreaView } from "react-native";
+import { LOGOUT } from "../actions/Types";
 import {
   loginDrawerContent,
   AuthenticatedDrawerContent,
   LoginDrawerContent,
 } from "./AuthenticatedDrawerContent";
+import { connect, useDispatch } from "react-redux";
+import { logOut } from "../actions/userActions";
 import ViewEvents from "../screens/ViewEvents";
 import { Ionicons } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
@@ -74,6 +77,7 @@ const AuthedTree = (props) => {
 };
 
 export const AuthedDrawer = () => {
+  const dispatch = useDispatch();
   const AuthenticatedDrawer = createDrawerNavigator();
   return (
     <AuthenticatedDrawer.Navigator
@@ -85,7 +89,7 @@ export const AuthedDrawer = () => {
               <Button
                 title="logout"
                 color={Colors.primaryColor}
-                onPress={() => console.log("Add logout Function here")}
+                onPress={() => dispatch({ type: LOGOUT })}
               />
             </SafeAreaView>
           </View>

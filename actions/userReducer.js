@@ -21,7 +21,7 @@ const initialState = {
   loading: false,
   admin: false,
   user: null,
-  triedAutoLogin: null,
+  triedAutoLogin: false,
   error: null,
 };
 
@@ -86,8 +86,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loggedIn: false,
-        user: null,
+        leaders: null,
         admin: false,
+        user: null,
+        triedAutoLogin: false,
+        error: null,
         loading: false,
       };
 
