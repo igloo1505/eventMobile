@@ -33,15 +33,28 @@ const UnauthedTree = (props) => {
         component={AuthScreen}
         options={DefaultNavOptions}
       />
-      {/* <UnauthedStack.Screen
+      <UnauthedStack.Screen
         name="About"
         component={AboutScreen}
         options={DefaultNavOptions}
-      /> */}
+      />
     </UnauthedStack.Navigator>
   );
 };
 export default UnauthedTree;
+
+const AboutStack = createStackNavigator();
+const aboutStack = (props) => {
+  return (
+    <AboutStack.Navigator>
+      <AboutStack.Screen
+        name="About"
+        component={AboutScreen}
+        options={DefaultNavOptions}
+      />
+    </AboutStack.Navigator>
+  );
+};
 
 const AuthedTree = (props) => {
   return (
@@ -64,7 +77,7 @@ export const AuthedDrawer = () => {
     >
       <AuthenticatedDrawer.Screen
         name="View All"
-        component={NavigationTree}
+        component={AuthedTree}
         options={{
           drawerIcon: (props) => {
             <Ionicons
@@ -77,7 +90,7 @@ export const AuthedDrawer = () => {
       />
       <AuthenticatedDrawer.Screen
         name="About"
-        component={AboutScreen}
+        component={aboutStack}
         options={DefaultNavOptions}
       />
     </AuthenticatedDrawer.Navigator>
@@ -112,7 +125,7 @@ export const LoginDrawer = () => {
       />
       <NewDrawer.Screen
         name="About!!!"
-        component={AboutScreen}
+        component={aboutStack}
         // options={DefaultNavOptions}
       />
     </NewDrawer.Navigator>

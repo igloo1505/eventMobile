@@ -28,10 +28,14 @@ export const DefaultNavOptions = (navData) => {
   return {
     headerTitle: "Event Driven MKE",
     headerStyle: {
-      backgroundColor: Platform.OS === "android" ? Colors.primaryColor : "",
+      // backgroundColor: Platform.OS === "android" ? Colors.primaryColor : "",
+      backgroundColor: Colors.primaryColor,
+      borderBottomWidth: 1,
+      borderBottomColor: "#ccc",
     },
     headerLeft: () => <HeaderButtonComponent />,
-    headerTintColor:
-      Platform.OS === "android" ? Colors.textColor : Colors.primaryColor,
+    // headerTintColor:
+    //   Platform.OS === "android" ? Colors.textColor : Colors.primaryColor,
+    headerTintColor: Colors.textColor,
   };
 };
