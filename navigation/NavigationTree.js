@@ -1,6 +1,11 @@
 import React from "react";
 import Landing from "../screens/Landing";
 import { View, Text, Button, SafeAreaView } from "react-native";
+import {
+  loginDrawerContent,
+  AuthenticatedDrawerContent,
+  LoginDrawerContent,
+} from "./AuthenticatedDrawerContent";
 import ViewEvents from "../screens/ViewEvents";
 import { Ionicons } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
@@ -72,7 +77,20 @@ export const AuthedDrawer = () => {
   const AuthenticatedDrawer = createDrawerNavigator();
   return (
     <AuthenticatedDrawer.Navigator
-      // drawerContent={{}}
+      drawerContent={(props) => {
+        return (
+          <View style={{ flex: 1, paddingTop: 20 }}>
+            <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
+              <DrawerItemList {...props} />
+              <Button
+                title="logout"
+                color={Colors.primaryColor}
+                onPress={() => console.log("Add logout Function here")}
+              />
+            </SafeAreaView>
+          </View>
+        );
+      }}
       drawerContentOptions={{ activeTintColor: Colors.primaryColor }}
     >
       <AuthenticatedDrawer.Screen
@@ -107,11 +125,6 @@ export const LoginDrawer = () => {
           <View style={{ flex: 1, paddingTop: 20 }}>
             <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
               <DrawerItemList {...props} />
-              <Button
-                title="logout"
-                color={Colors.primaryColor}
-                onPress={() => console.log("Add logout Function here")}
-              />
             </SafeAreaView>
           </View>
         );
