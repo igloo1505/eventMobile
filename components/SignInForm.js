@@ -7,11 +7,12 @@ import {
   Keyboard,
   StyleSheet,
   Platform,
-  Button,
 } from "react-native";
+import { SIGN_UP_FORM } from "../actions/Types";
 import { Input } from "react-native-elements";
+import { useDispatch } from "react-redux";
 import { connect } from "react-redux";
-import { Text } from "native-base";
+import { Text, Button } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import Card from "../components/UI/Card";
@@ -26,6 +27,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const SignInForm = ({ user, loginUser }, props) => {
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const toggleForm = () => {
+    dispatch({ type: SIGN_UP_FORM });
+  };
 
   const handleSubmit = () => {
     let User = { email, password };
@@ -87,12 +92,22 @@ const SignInForm = ({ user, loginUser }, props) => {
                 }
               />
               <Button
-                dark
+                // bordered
+                block
                 onPress={handleSubmit}
                 style={styles.buttonStyle}
                 title="Login"
               >
                 <Text>Login</Text>
+              </Button>
+              <Button
+                bordered
+                block
+                onPress={() => dispatch({ type: SIGN_UP_FORM })}
+                style={styles.switchButtonStyle}
+                title="SignUp"
+              >
+                <Text style={{ color: "black" }}>Sign Up</Text>
               </Button>
             </Card>
             {/* </LinearGradient> */}
@@ -102,14 +117,6 @@ const SignInForm = ({ user, loginUser }, props) => {
     </KeyboardAvoidingView>
   );
 };
-
-// SignInForm.navigationOptions = {
-//   headerTitle: "Event Driven MKE",
-//   headerStyle: {
-//     backgroundColor: Colors.primaryColor,
-//   },
-//   headerTintColor: Colors.textColor,
-// };
 
 const styles = StyleSheet.create({
   loginCard: {
@@ -149,6 +156,13 @@ const styles = StyleSheet.create({
   buttonStyle: {
     alignItems: "center",
     justifyContent: "center",
+    color: Colors.defaultPrimary,
+  },
+  switchButtonStyle: {
+    alignItems: "center",
+    justifyContent: "center",
+    color: Colors.defaultPrimary,
+    marginTop: 5,
   },
   iconStyle: {
     padding: 5,

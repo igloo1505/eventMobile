@@ -1,7 +1,8 @@
-import { TOGGLE_OVERLAY } from "./Types";
+import { TOGGLE_OVERLAY, SIGN_UP_FORM } from "./Types";
 
 const initialState = {
   visible: false,
+  signUpForm: false,
 };
 
 export default (state = initialState, action) => {
@@ -11,6 +12,12 @@ export default (state = initialState, action) => {
         ...state,
         visible: !visible,
       };
+    case SIGN_UP_FORM: {
+      return {
+        ...state,
+        signUpForm: !state.signUpForm,
+      };
+    }
     default:
       return state;
   }

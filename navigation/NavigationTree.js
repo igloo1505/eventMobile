@@ -29,6 +29,8 @@ import {
 } from "@react-navigation/native";
 import AppConstants, { DefaultNavOptions } from "../constants/AppConstants";
 import StartUpScreen from "../screens/StartUpScreen";
+import ByNeighborhood from "../screens/ByNeighborhood";
+import ByIndividualNeighborhood from "../screens/ByIndividualNeighborhood";
 
 const UnauthedStack = createStackNavigator();
 const AuthedStack = createStackNavigator();
@@ -51,6 +53,32 @@ const UnauthedTree = (props) => {
 };
 export default UnauthedTree;
 
+const NeighborhoodStack = createStackNavigator();
+const ByNeighborhoodStack = (props) => {
+  return (
+    <NeighborhoodStack.Navigator>
+      <NeighborhoodStack.Screen
+        name="ByNeighborhood"
+        component={ByNeighborhood}
+        options={DefaultNavOptions}
+      />
+      <NeighborhoodStack.Screen
+        name="ByNeighborhoodDetail"
+        component={ByIndividualNeighborhood}
+        options={{
+          headerTitle: "Event Driven MKE",
+          headerStyle: {
+            backgroundColor: Colors.primaryColor,
+            borderBottomWidth: 1,
+            borderBottomColor: "#ccc",
+          },
+          headerTintColor: Colors.textColor,
+        }}
+      />
+    </NeighborhoodStack.Navigator>
+  );
+};
+
 const AboutStack = createStackNavigator();
 const aboutStack = (props) => {
   return (
@@ -66,11 +94,11 @@ const aboutStack = (props) => {
 
 const AuthedTree = (props) => {
   return (
-    <AuthedStack.Navigator>
+    <AuthedStack.Navigator screenOptions={DefaultNavOptions}>
+      <AuthedStack.Screen name="Home" component={ViewEvents} />
       <AuthedStack.Screen
-        name="Home"
-        component={ViewEvents}
-        options={DefaultNavOptions}
+        name="By_Neighborhood"
+        component={ByNeighborhoodStack}
       />
     </AuthedStack.Navigator>
   );
@@ -109,6 +137,11 @@ export const AuthedDrawer = () => {
             />;
           },
         }}
+      />
+      <AuthenticatedDrawer.Screen
+        name="By Neighborhood"
+        component={ByNeighborhoodStack}
+        options={DefaultNavOptions}
       />
       <AuthenticatedDrawer.Screen
         name="About"

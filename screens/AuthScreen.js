@@ -7,6 +7,7 @@ import {
   Button,
 } from "react-native";
 import { Input } from "react-native-elements";
+
 import SignUpForm from "../components/SignUpForm";
 // import SignInForm from "../components/SignInForm";
 import SignInForm from "../components/SignInForm";
@@ -22,24 +23,8 @@ import Colors from "../constants/Colors";
 
 // TODO go back and fix errorMessage so it conditionally renders. Right now if uncommented it shows up regardless
 
-const AuthScreen = ({ user, props, loginUser }) => {
-  // console.log("props!!! \r\n\r\n", JSON.stringify(props));
-  // console.log("navigation \r\n\r\n", props.navigation.actions.navigate);
+const AuthScreen = ({ user, layout: { signUpForm }, props, loginUser }) => {
   let [signUp, setSignUp] = useState(false);
-  let [email, setEmail] = useState("");
-  let [password, setPassword] = useState("");
-
-  // const handleSubmit = async () => {
-  //   let User = { email, password };
-  //   console.log("Login User", User);
-  //   try {
-  //     await loginUser(User);
-  //     // props.navigation.navigate("main");
-  //     props.navigation.actions.navigate("main");
-  //   } catch (error) {
-  //     console.error("error occured");
-  //   }
-  // };
 
   return (
     <View style={styles.mainView}>
@@ -47,7 +32,7 @@ const AuthScreen = ({ user, props, loginUser }) => {
         colors={[Colors.primaryColor, Colors.accentColor]}
         style={styles.gradientStyle}
       >
-        {signUp ? <SignUpForm /> : <SignInForm style={{ flex: 1 }} />}
+        {signUpForm ? <SignUpForm /> : <SignInForm style={{ flex: 1 }} />}
       </LinearGradient>
     </View>
   );
@@ -78,6 +63,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state, ownProps) => ({
   user: state.user,
+  layout: state.layout,
   props: ownProps,
 });
 

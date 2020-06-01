@@ -1,6 +1,7 @@
 /* es-lint-disable */
 import React from "react";
 import HeaderButtonComponent from "../navigation/HeaderButtonComponent";
+import Neighborhood from "../models/NeighborhoodGridModel";
 import NavigationTree from "../navigation/NavigationTree";
 import About from "../screens/About";
 import { Ionicons } from "@expo/vector-icons";
@@ -12,7 +13,7 @@ import {
 import Colors from "./Colors";
 
 export default {
-  serverRoot: "https://c5c8587d9d64.ngrok.io",
+  serverRoot: "https://4865887c0eaf.ngrok.io",
   drawerOptions: {
     drawerIcon: (props) => {
       <Ionicons
@@ -22,6 +23,18 @@ export default {
       />;
     },
   },
+  neighborhoodArray: [
+    new Neighborhood("1", "RiverWest", "#f5428d"),
+    new Neighborhood("2", "Brady Street", "#f54242"),
+    new Neighborhood("3", "Third Ward", "#f5a442"),
+    new Neighborhood("4", "Brewers Hill", "#f5d142"),
+    new Neighborhood("5", "Water Street", "#368dff"),
+    new Neighborhood("6", "Upper East Side", "#41d95d"),
+    new Neighborhood("7", "Walkers Point", "#9eecff"),
+    new Neighborhood("8", "West Side", "#b9ffb0"),
+    new Neighborhood("9", "South Side", "#ffc7ff"),
+    new Neighborhood("10", "North Side", "#47fced"),
+  ],
 };
 
 export const DefaultNavOptions = (navData) => {
