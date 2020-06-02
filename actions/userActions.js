@@ -4,6 +4,7 @@ import {
   USER_ERROR,
   LOGIN,
   EDIT_ACCESS,
+  REGISTER_USER,
   REGISTER_ADMIN,
   CHANGE_VIEW,
   LOGOUT,
@@ -37,16 +38,22 @@ export const setTriedAutoLogin = () => {
   dispatch({ type: TRIED_AUTO_LOGIN });
 };
 
-export const setNewUser = (user) => async (dispatch) => {
+export const submitNewUser = (user) => async (dispatch) => {
+  // debugger;
+  console.log("reached action");
   setLoading();
   try {
-    const res = await axios.post("/users", user, config);
-
+    const res = await axios.post(
+      `${appConstants.serverRoot}/registerUser/user`,
+      user,
+      config
+    );
+    console.log("res", res);
     dispatch({
-      type: REGISTER_ADMIN,
+      type: REGISTER_USER,
       payload: res.data,
     });
-    loadUser();
+    // loadUser();
   } catch (error) {
     dispatch({
       type: USER_ERROR,
@@ -108,4 +115,5 @@ export const setLoading = () => {
     type: SET_LOADING,
   };
 };
+
 export const logOut = () => async (dispatch) => dispatch({ type: LOGOUT });

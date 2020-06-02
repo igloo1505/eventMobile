@@ -3,7 +3,9 @@ import {
   SET_LOADING,
   EDIT_ACCESS,
   LOGIN,
+  REGISTER_USER,
   REGISTER_ADMIN,
+  USER_ERROR,
   CHANGE_VIEW,
   LOGOUT,
   TRIED_AUTO_LOGIN,
@@ -37,18 +39,26 @@ export default (state = initialState, action) => {
         ...state,
         menuKey: action.payload,
       };
-
-    case REGISTER_ADMIN:
-      const { token, user } = action.payload;
-      setAuthToken(token);
-
-      AsyncStorage.setItem("token", token);
+    case REGISTER_USER:
+      setAuthToken(action.payload.token);
+      AsyncStorage.setItem("token", action.payload.token);
       return {
         ...state,
         loggedIn: true,
         user: user,
         loading: false,
       };
+
+    case REGISTER_ADMIN:
+      setAuthToken(action.payload.token);
+      AsyncStorage.setItem("token", action.payload.token);
+      return {
+        ...state,
+        loggedIn: true,
+        user: user,
+        loading: false,
+      };
+
     case SET_USER:
       return {
         ...state,
@@ -99,6 +109,12 @@ export default (state = initialState, action) => {
         ...state,
         loggedIn: true,
         user: action.payload,
+        loading: false,
+      };
+    case USER_ERROR:
+      return {
+        ...state,
+        error: action.payload,
         loading: false,
       };
 

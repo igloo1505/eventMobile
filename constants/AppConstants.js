@@ -2,8 +2,6 @@
 import React from "react";
 import HeaderButtonComponent from "../navigation/HeaderButtonComponent";
 import Neighborhood from "../models/NeighborhoodGridModel";
-import NavigationTree from "../navigation/NavigationTree";
-import About from "../screens/About";
 import { Ionicons } from "@expo/vector-icons";
 import {
   NavigationContainer,
@@ -13,7 +11,7 @@ import {
 import Colors from "./Colors";
 
 export default {
-  serverRoot: "https://4865887c0eaf.ngrok.io",
+  serverRoot: "https://15ff5cf31176.ngrok.io",
   drawerOptions: {
     drawerIcon: (props) => {
       <Ionicons
@@ -35,6 +33,14 @@ export default {
     new Neighborhood("9", "South Side", "#ffc7ff"),
     new Neighborhood("10", "North Side", "#47fced"),
   ],
+  defaultCardStyle: {
+    shadowColor: "black",
+    shadowOpacity: 0.26,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 5,
+    borderRadius: 10,
+    backgroundColor: "white",
+  },
 };
 
 export const DefaultNavOptions = (navData) => {

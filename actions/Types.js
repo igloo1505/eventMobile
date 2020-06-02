@@ -6,6 +6,7 @@ export const SET_LOADING = "SET_LOADING";
 export const SET_USER = "SET_USER";
 export const REGISTER_ADMIN = "REGISTER_ADMIN";
 export const LOGOUT = "LOGOUT";
+export const REGISTER_USER = "REGISTER_USER";
 export const USER_ERROR = "USER_ERROR";
 export const LOGIN = "LOGIN";
 export const AUTHENTICATED = "AUTHENTICATED";
