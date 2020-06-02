@@ -6,6 +6,7 @@ import {
   KeyboardAvoidingView,
   Keyboard,
   StyleSheet,
+  SafeAreaView,
   Platform,
 } from "react-native";
 import {
@@ -15,20 +16,27 @@ import {
   SignUpFormStep4,
   ConfirmationScreen,
 } from "./SignUpFormStep";
-import { SIGN_UP_FORM } from "../actions/Types";
-import { submitNewUser } from "../actions/userActions";
+
+import { SIGN_UP_FORM, SWITCH_TO_ADMIN_REGISTER } from "../actions/Types";
+import { submitNewUser, submitNewAdminUser } from "../actions/userActions";
 import { Input } from "react-native-elements";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { Text, Button } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import Card from "../components/UI/Card";
 import { LinearGradient } from "expo-linear-gradient";
-import { loginUser } from "../actions/userActions";
+import { loginUser, switchToAdminRegister } from "../actions/userActions";
+import {
+  NavigationContainer,
+  DrawerActions,
+  useNavigation,
+} from "@react-navigation/native";
 // import Input from "../components/UI/Input";
 import Colors from "../constants/Colors";
+import { debug } from "react-native-reanimated";
 
-const SignUpForm = ({ user, submitNewUser }) => {
+const SignUpForm = ({ user, submitNewUser, props }) => {
   const [formStep, setFormStep] = useState(1);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -36,6 +44,8 @@ const SignUpForm = ({ user, submitNewUser }) => {
   const [password1, setpassword1] = useState("");
   const [userLocalState, setUserLocalState] = useState("");
   const [city, setCity] = useState("");
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
   const SubmitNewUser = () => {
     let newUser = {
       name,
@@ -45,12 +55,15 @@ const SignUpForm = ({ user, submitNewUser }) => {
       city,
       state: userLocalState,
     };
-    submitNewUser(newUser);
+
+    if (admin) {
+      dispatch({ type: SWITCH_TO_ADMIN_REGISTER, payload: newUser });
+      navigation.navigate("registerBusiness");
+    } else if (!admin) {
+      submitNewUser(newUser);
+    }
   };
 
-  const handleSubmit = () => {
-    console.log({ name, email, admin });
-  };
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -89,9 +102,11 @@ const SignUpForm = ({ user, submitNewUser }) => {
                 setAdmin={setAdmin}
                 admin={admin}
                 setFormStep={setFormStep}
-                handleSubmit={handleSubmit}
               />
             )}
+
+            {/* {formStep === 1 && navigation.navigate("registerBusiness")} */}
+
             {formStep === 2 && (
               <SignUpFormStep2
                 setFormStep={setFormStep}
@@ -190,8 +205,9 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state, ownProps) => ({
   user: state.user,
+  props: ownProps,
 });
 
 export default connect(mapStateToProps, { submitNewUser })(SignUpForm);

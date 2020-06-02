@@ -79,8 +79,8 @@ export const validatePassword = (password) => {
 
   if (containsSpecial() && containsNumber()) {
     console.log("valid password");
-    // return true;
-    return console.log("returning true as final return");
+    return true;
+    // return console.log("returning true as final return");
   } else if (!containsSpecial() || !containsNumber()) {
     console.log("invalid password");
     // return false;

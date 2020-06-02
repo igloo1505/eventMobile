@@ -5,6 +5,7 @@ import {
   LOGIN,
   REGISTER_USER,
   REGISTER_ADMIN,
+  SWITCH_TO_ADMIN_REGISTER,
   USER_ERROR,
   CHANGE_VIEW,
   LOGOUT,
@@ -23,6 +24,7 @@ const initialState = {
   loading: false,
   admin: false,
   user: null,
+  userAdminDataHolder: null,
   triedAutoLogin: false,
   error: null,
 };
@@ -48,6 +50,12 @@ export default (state = initialState, action) => {
         user: user,
         loading: false,
       };
+    case SWITCH_TO_ADMIN_REGISTER:
+      return {
+        ...state,
+        userAdminDataHolder: action.payload,
+        loading: false,
+      };
 
     case REGISTER_ADMIN:
       setAuthToken(action.payload.token);
@@ -55,7 +63,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loggedIn: true,
-        user: user,
+        user: action.payload.user,
         loading: false,
       };
 
@@ -112,6 +120,7 @@ export default (state = initialState, action) => {
         loading: false,
       };
     case USER_ERROR:
+      console.log(action.payload);
       return {
         ...state,
         error: action.payload,

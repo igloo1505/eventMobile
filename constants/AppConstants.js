@@ -11,7 +11,7 @@ import {
 import Colors from "./Colors";
 
 export default {
-  serverRoot: "https://15ff5cf31176.ngrok.io",
+  serverRoot: "https://fa17f4e3de55.ngrok.io",
   drawerOptions: {
     drawerIcon: (props) => {
       <Ionicons
@@ -33,6 +33,28 @@ export default {
     new Neighborhood("9", "South Side", "#ffc7ff"),
     new Neighborhood("10", "North Side", "#47fced"),
   ],
+  businessTypeArray: [
+    "Bar",
+    "Nightclub",
+    "Fitness",
+    "Tech",
+    "Professional Networking",
+    "Social Event",
+    "Music Related",
+    "Education & Academic",
+  ],
+  eventTypeArray: [
+    "Nightlife",
+    "Fitness",
+    "Sports & competition",
+    "Professional Networking",
+    "Social Event",
+    "Music Related",
+    "Education & Academic",
+    "Outdoors",
+    "Hobby (other)",
+    "social (other)",
+  ],
   defaultCardStyle: {
     shadowColor: "black",
     shadowOpacity: 0.26,
@@ -40,6 +62,27 @@ export default {
     elevation: 5,
     borderRadius: 10,
     backgroundColor: "white",
+  },
+  defaultButtonStyle: {
+    alignItems: "center",
+    justifyContent: "center",
+    color: Colors.defaultPrimary,
+    marginVertical: 16,
+  },
+  defaultButtonTextStyle: {
+    color: Colors.defaultPrimary,
+    paddingHorizontal: 16,
+  },
+  defaultBackButtonTextStyle: {
+    color: Colors.dark,
+    paddingHorizontal: 16,
+  },
+  defaultBackButtonStyle: {
+    alignItems: "center",
+    justifyContent: "center",
+    color: Colors.dark,
+    // width: "100%",
+    // marginVertical: 5,
   },
 };
 

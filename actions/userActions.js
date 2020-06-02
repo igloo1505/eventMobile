@@ -13,7 +13,7 @@ import {
 import appConstants from "../constants/AppConstants";
 import axios from "axios";
 import setAuthToken from "../setToken";
-import { AsyncStorage } from "react-native";
+import { AsyncStorage, Alert } from "react-native";
 
 const config = {
   headers: {
@@ -40,7 +40,6 @@ export const setTriedAutoLogin = () => {
 
 export const submitNewUser = (user) => async (dispatch) => {
   // debugger;
-  console.log("reached action");
   setLoading();
   try {
     const res = await axios.post(
@@ -55,12 +54,44 @@ export const submitNewUser = (user) => async (dispatch) => {
     });
     // loadUser();
   } catch (error) {
+    console.log(error);
     dispatch({
       type: USER_ERROR,
       payload: error,
     });
   }
 };
+export const submitNewAdminUser = (user) => async (dispatch) => {
+  setLoading();
+  try {
+    const res = await axios.post(
+      `${appConstants.serverRoot}/registerUser/userAdmin`,
+      user,
+      config
+    );
+    console.log("res", res);
+    dispatch({
+      type: REGISTER_ADMIN,
+      payload: res.data,
+    });
+    // loadUser();
+  } catch (error) {
+    console.error(error);
+    dispatch({
+      type: USER_ERROR,
+      payload: error,
+    });
+  }
+};
+
+export const switchToAdminRegister = (data) => async (dispatch) => {
+  console.log(data);
+  dispatch({
+    type: SWITCH_TO_ADMIN_REGISTER,
+    payload: data,
+  });
+};
+
 export const editUserAccess = ({ orgInfo }) => async (dispatch) => {
   const res = await axios.put(
     `/organizations/${orgInfo.organizationReference}`,

@@ -16,7 +16,7 @@ import {
   validatePassword,
 } from "../models/SimpleValidation";
 import { SIGN_UP_FORM } from "../actions/Types";
-import { AutoCompleteState } from "./SelectStateModal";
+
 import { Input, Tooltip } from "react-native-elements";
 import { useDispatch } from "react-redux";
 import { connect } from "react-redux";
@@ -77,6 +77,7 @@ export const SignUpFormStep1 = (props) => {
         placeholder="Email"
         label="Email"
         minLength={8}
+        textContentType="emailAddress"
         onChangeText={(text) => props.setEmail(text)}
         value={props.email}
         // errorMessage="Please enter a valid password"
@@ -132,7 +133,6 @@ export const SignUpFormStep2 = (props) => {
     }
   };
   const handlePasswordSubmit = () => {
-    debugger;
     if (validatePassword(props.password1)) {
       props.setFormStep(3);
     } else if (!validatePassword(props.password1)) {
@@ -140,8 +140,9 @@ export const SignUpFormStep2 = (props) => {
     }
   };
   const handleValidPassword = (text) => {
-    props.setpassword1(text);
+    console.log(validatePassword(text));
     setValidPassword(validatePassword(text));
+    props.setpassword1(text);
   };
   return (
     <Card style={styles.loginCard}>
@@ -153,9 +154,9 @@ export const SignUpFormStep2 = (props) => {
         autoCapitalize="none"
         secureTextEntry
         errorMessage={
-          !validPassword && validPassword !== null
-            ? "Password needs to be more secure"
-            : ""
+          validPassword || validPassword === null
+            ? ""
+            : "Password needs to be more secure"
         }
         leftIcon={
           <AntDesign
@@ -196,7 +197,10 @@ export const SignUpFormStep2 = (props) => {
       <Button
         bordered
         block
-        onPress={() => props.setFormStep(1)}
+        onPress={() => {
+          setValidPassword(null);
+          props.setFormStep(1);
+        }}
         style={styles.switchButtonStyle}
         title="Back"
       >

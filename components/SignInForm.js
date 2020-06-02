@@ -63,6 +63,7 @@ const SignInForm = ({ user, loginUser }, props) => {
                 placeholder="Email"
                 label="Email"
                 onChangeText={(text) => setEmail(text)}
+                textContentType="username"
                 keyboardType="default"
                 autoCapitalize="none"
                 // errorMessage="Please enter a valid password"
@@ -80,6 +81,7 @@ const SignInForm = ({ user, loginUser }, props) => {
                 secureTextEntry
                 label="Password"
                 minLength={8}
+                textContentType="password"
                 onChangeText={(text) => setPassword(text)}
                 // errorMessage="Please enter a valid password"
                 leftIcon={

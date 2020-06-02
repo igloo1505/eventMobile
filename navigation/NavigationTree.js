@@ -31,6 +31,7 @@ import AppConstants, { DefaultNavOptions } from "../constants/AppConstants";
 import StartUpScreen from "../screens/StartUpScreen";
 import ByNeighborhood from "../screens/ByNeighborhood";
 import ByIndividualNeighborhood from "../screens/ByIndividualNeighborhood";
+import AdminFormSteps from "../components/AdminFormSteps";
 
 const UnauthedStack = createStackNavigator();
 const AuthedStack = createStackNavigator();
@@ -44,6 +45,12 @@ const UnauthedTree = (props) => {
         options={DefaultNavOptions}
       />
       <UnauthedStack.Screen
+        name="registerBusiness"
+        component={AdminRegisterStack}
+        options={{ headerShown: false }}
+      />
+
+      <UnauthedStack.Screen
         name="About"
         component={AboutScreen}
         options={DefaultNavOptions}
@@ -52,6 +59,19 @@ const UnauthedTree = (props) => {
   );
 };
 export default UnauthedTree;
+
+const RegisterAdminStack = createStackNavigator();
+const AdminRegisterStack = (props) => {
+  return (
+    <RegisterAdminStack.Navigator>
+      <RegisterAdminStack.Screen
+        name="Register_Business"
+        component={AdminFormSteps}
+        options={DefaultNavOptions}
+      />
+    </RegisterAdminStack.Navigator>
+  );
+};
 
 const NeighborhoodStack = createStackNavigator();
 const ByNeighborhoodStack = (props) => {
@@ -174,7 +194,7 @@ export const LoginDrawer = () => {
         // options={DefaultNavOptions}
       />
       <NewDrawer.Screen
-        name="About!!!"
+        name="About"
         component={aboutStack}
         // options={DefaultNavOptions}
       />
