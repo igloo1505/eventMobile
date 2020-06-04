@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Landing from "../screens/Landing";
 import { View, Text, Button, SafeAreaView } from "react-native";
 import { LOGOUT } from "../actions/Types";
@@ -7,6 +7,7 @@ import {
   AuthenticatedDrawerContent,
   LoginDrawerContent,
 } from "./AuthenticatedDrawerContent";
+import store from "../store";
 import { connect, useDispatch } from "react-redux";
 import { logOut } from "../actions/userActions";
 import ViewEvents from "../screens/ViewEvents";
@@ -31,12 +32,13 @@ import AppConstants, { DefaultNavOptions } from "../constants/AppConstants";
 import StartUpScreen from "../screens/StartUpScreen";
 import ByNeighborhood from "../screens/ByNeighborhood";
 import ByIndividualNeighborhood from "../screens/ByIndividualNeighborhood";
+import CreateEvent from "../screens/CreateEvent";
 import AdminFormSteps from "../components/AdminFormSteps";
 
 const UnauthedStack = createStackNavigator();
 const AuthedStack = createStackNavigator();
 
-const UnauthedTree = (props) => {
+export const UnauthedTree = (props) => {
   return (
     <UnauthedStack.Navigator>
       <UnauthedStack.Screen
@@ -58,10 +60,9 @@ const UnauthedTree = (props) => {
     </UnauthedStack.Navigator>
   );
 };
-export default UnauthedTree;
 
 const RegisterAdminStack = createStackNavigator();
-const AdminRegisterStack = (props) => {
+export const AdminRegisterStack = (props) => {
   return (
     <RegisterAdminStack.Navigator>
       <RegisterAdminStack.Screen
@@ -74,7 +75,7 @@ const AdminRegisterStack = (props) => {
 };
 
 const NeighborhoodStack = createStackNavigator();
-const ByNeighborhoodStack = (props) => {
+export const ByNeighborhoodStack = (props) => {
   return (
     <NeighborhoodStack.Navigator>
       <NeighborhoodStack.Screen
@@ -100,7 +101,7 @@ const ByNeighborhoodStack = (props) => {
 };
 
 const AboutStack = createStackNavigator();
-const aboutStack = (props) => {
+export const aboutStack = (props) => {
   return (
     <AboutStack.Navigator>
       <AboutStack.Screen
@@ -112,7 +113,7 @@ const aboutStack = (props) => {
   );
 };
 
-const AuthedTree = (props) => {
+export const AuthedTree = (props) => {
   return (
     <AuthedStack.Navigator screenOptions={DefaultNavOptions}>
       <AuthedStack.Screen name="Home" component={ViewEvents} />
@@ -121,6 +122,71 @@ const AuthedTree = (props) => {
         component={ByNeighborhoodStack}
       />
     </AuthedStack.Navigator>
+  );
+};
+const CreateEventStack = createStackNavigator();
+
+export const CreateEventTree = () => {
+  return (
+    <CreateEventStack.Navigator>
+      <CreateEventStack.Screen
+        name="Create Event"
+        component={CreateEvent}
+        options={DefaultNavOptions}
+      />
+    </CreateEventStack.Navigator>
+  );
+};
+
+const AuthedAdminDrawer = createDrawerNavigator();
+export const AdminDrawer = () => {
+  return (
+    <AuthedAdminDrawer.Navigator
+      drawerContent={(props) => {
+        return (
+          <View style={{ flex: 1, paddingTop: 20 }}>
+            <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
+              <DrawerItemList {...props} />
+              <Button
+                title="logout"
+                color={Colors.primaryColor}
+                onPress={() => dispatch({ type: LOGOUT })}
+              />
+            </SafeAreaView>
+          </View>
+        );
+      }}
+      drawerContentOptions={{ activeTintColor: Colors.primaryColor }}
+    >
+      <AuthedAdminDrawer.Screen
+        name="View All"
+        component={AuthedTree}
+        options={{
+          drawerIcon: (props) => {
+            <Ionicons
+              name={Platform.OS === "android" ? "md-create" : "ios-create"}
+              size={23}
+              color={Colors.primaryColor}
+            />;
+          },
+        }}
+      />
+      <AuthedAdminDrawer.Screen
+        name="By Neighborhood"
+        component={ByNeighborhoodStack}
+        options={DefaultNavOptions}
+      />
+      <AuthedAdminDrawer.Screen
+        name="Create Event"
+        component={CreateEventTree}
+        options={DefaultNavOptions}
+      />
+      <AuthedAdminDrawer.Screen
+        name="About"
+        component={aboutStack}
+        options={DefaultNavOptions}
+      />
+    </AuthedAdminDrawer.Navigator>
   );
 };
 
@@ -202,16 +268,28 @@ export const LoginDrawer = () => {
   );
 };
 
-export const NavigationSwitcher = (props) => {
-  const isAuthenticated = useSelector((state) => state.user.loggedIn);
-  const triedAutoLogin = useSelector((state) => state.user.triedAutoLogin);
-  console.log("isAuthenticated \r\n", isAuthenticated);
-  console.log("autoLogin \r\n", triedAutoLogin);
+const NavigationSwitcher = ({ user, props }) => {
+  let isAdmin;
+  console.log(user);
+  let isAuthenticated = user.loggedIn;
+  if (user.loggedIn) {
+    isAdmin = user.user.admin;
+  } else if (!user.loggedIn) {
+    isAdmin = false;
+  }
+
   return (
     <NavigationContainer>
-      {isAuthenticated && <AuthedDrawer />}
-      {!isAuthenticated && triedAutoLogin && <AuthedDrawer />}
-      {!isAuthenticated && !triedAutoLogin && <LoginDrawer />}
+      {isAuthenticated && isAdmin && <AdminDrawer />}
+      {isAuthenticated && !isAdmin && <AuthedDrawer />}
+      {!isAuthenticated && !isAdmin && <LoginDrawer />}
     </NavigationContainer>
   );
 };
+
+const mapStateToProps = (state, ownProps) => ({
+  user: state.user,
+  props: ownProps,
+});
+
+export default connect(mapStateToProps)(NavigationSwitcher);

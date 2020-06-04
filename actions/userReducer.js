@@ -120,7 +120,7 @@ export default (state = initialState, action) => {
         loading: false,
       };
     case USER_ERROR:
-      console.log(action.payload);
+      console.error("at reducer...", action.payload);
       return {
         ...state,
         error: action.payload,

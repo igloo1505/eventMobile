@@ -121,6 +121,7 @@ export const loginUser = (user) => async (dispatch) => {
       user,
       config
     );
+    console.log(res);
     dispatch({
       type: LOGIN,
       payload: res.data,
@@ -130,7 +131,7 @@ export const loginUser = (user) => async (dispatch) => {
     console.error(err);
     dispatch({
       type: USER_ERROR,
-      payload: err,
+      payload: err.msg,
     });
   }
 };

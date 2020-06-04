@@ -20,9 +20,7 @@ import { NavigationContainer } from "@react-navigation/native";
 
 import { LinearGradient } from "expo-linear-gradient";
 import useCachedResources from "./hooks/useCachedResources";
-import NavigationTree, {
-  NavigationSwitcher,
-} from "./navigation/NavigationTree";
+import NavigationSwitcher from "./navigation/NavigationTree";
 
 enableScreens();
 

@@ -11,7 +11,7 @@ import {
 import Colors from "./Colors";
 
 export default {
-  serverRoot: "https://fa17f4e3de55.ngrok.io",
+  serverRoot: "https://74613a3eeb8b.ngrok.io",
   drawerOptions: {
     drawerIcon: (props) => {
       <Ionicons

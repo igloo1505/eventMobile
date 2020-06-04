@@ -10,6 +10,7 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import StateSelectDropdown from "./StateSelectDropdown";
+
 import Card from "../components/UI/Card";
 import { Input } from "react-native-elements";
 import { Button } from "native-base";
@@ -17,7 +18,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import AppConstants from "../constants/AppConstants";
 import BusinessTypePicker from "./BusinessTypePicker";
 import Colors from "../constants/Colors";
-import AdminSwitchOverlay from "./AdminSwitchOverlay";
+import UniversalOverlay from "./AdminSwitchOverlay";
 
 export const AdminFormStep1 = (props) => {
   const [dropDownText, setDropDownText] = useState("Business Type");
@@ -40,11 +41,16 @@ export const AdminFormStep1 = (props) => {
       props.setFormStep(2);
     }
   };
+  let textTop = "You're registering a business?!?!";
+  let textMiddle =
+    "That's great news. We just need to collect some information so we can pass on your events to people near by.";
   return (
     <View style={{ flex: 1, width: "100%", justifyContent: "center" }}>
-      <AdminSwitchOverlay
+      <UniversalOverlay
         visible={props.visible}
         setVisible={props.setVisible}
+        textTop={textTop}
+        textMiddle={textMiddle}
       />
       <Card style={styles.cardStyle}>
         <Input
