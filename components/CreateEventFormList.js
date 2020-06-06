@@ -5,12 +5,15 @@ import {
   ScrollView,
   Keyboard,
   StyleSheet,
+  TextInput,
   Alert,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
 } from "react-native";
+import moment from "moment";
 import EventTypeDropdown from "./EventTypeDropdown";
 import { Button } from "native-base";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import { Input } from "react-native-elements";
 import Card from "./UI/Card";
 import UniversalOverlay from "./AdminSwitchOverlay";
@@ -95,10 +98,11 @@ export const CreateEventForm2 = (props) => {
       <View
         style={{
           marginBottom: 50,
-          width: "80%",
+          width: "100%",
           flexDirection: "row",
           flexWrap: "wrap",
           justifyContent: "center",
+          alignItems: "center",
         }}
       >
         {props.eventTags.map((tag) => (
@@ -113,7 +117,6 @@ export const CreateEventForm2 = (props) => {
               //   borderColor: Colors.defaultPrimary,
               //   borderWidth: 2,
               borderRadius: 10,
-              backgroundRadius: 10,
               overflow: "hidden",
             }}
             onPress={() => handleDeleteTag({ tag })}
@@ -141,7 +144,7 @@ export const CreateEventForm2 = (props) => {
           <Button
             bordered
             style={AppConstants.defaultButtonStyle}
-            onPress={() => console.log("submit form logic here")}
+            onPress={() => props.setFormStep(3)}
           >
             <Text style={AppConstants.defaultButtonTextStyle}>Continue</Text>
           </Button>
@@ -151,6 +154,168 @@ export const CreateEventForm2 = (props) => {
             block
             style={AppConstants.defaultBackButtonStyle}
             onPress={() => props.setFormStep(1)}
+          >
+            <Text style={AppConstants.defaultBackButtonTextStyle}>Back</Text>
+          </Button>
+        </View>
+      </Card>
+    </View>
+  );
+};
+
+export const CreateEventForm3 = (props) => {
+  const [mode, setMode] = useState("date");
+
+  const handleDateInput = (data) => {
+    if (mode === "date") {
+      let utc = moment(data).utc();
+      console.log(utc);
+      props.setDateString(moment(data).utc().calendar());
+      props.setDate(new Date(utc));
+    } else if (mode === "time") {
+      props.setTime(data);
+    }
+  };
+
+  return (
+    <View
+      style={{
+        flex: 1,
+        width: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Card style={styles.cardStyle}>
+        <View>
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={
+              mode === "date" ? new Date(props.date) : new Date(props.time)
+            }
+            mode={mode}
+            is24Hour={true}
+            display="default"
+            onChange={(d) => {
+              handleDateInput(d.nativeEvent.timestamp);
+            }}
+            style={{ border: "5px solid red", width: 400 }}
+          />
+        </View>
+
+        <Text>Date: {props.dateString} </Text>
+        <View>
+          <Button
+            bordered
+            style={AppConstants.defaultButtonStyle}
+            onPress={() => {
+              mode === "date" ? setMode("time") : props.setFormStep(4);
+            }}
+          >
+            {mode === "date" ? (
+              <Text style={AppConstants.defaultButtonTextStyle}>Set Date</Text>
+            ) : (
+              <Text style={AppConstants.defaultButtonTextStyle}>Continue</Text>
+            )}
+          </Button>
+
+          <Button
+            bordered
+            dark
+            block
+            style={AppConstants.defaultBackButtonStyle}
+            onPress={() => {
+              if (mode === "time") {
+                setMode("date");
+              } else if (mode === "date") {
+                props.setFormStep(2);
+              }
+            }}
+          >
+            <Text style={AppConstants.defaultBackButtonTextStyle}>Back</Text>
+          </Button>
+        </View>
+      </Card>
+    </View>
+  );
+};
+
+export const CreateEventForm4 = (props) => {
+  const [textRemaining, setTextRemaining] = useState(200);
+  const [displayRemaining, setDisplayRemaining] = useState(false);
+  const textMiddle =
+    "Now's your chance to tell people a little more about your event.";
+  const validateDescription = (data) => {
+    console.log(props.eventDescription.length);
+    console.log(textRemaining);
+    let setRemainder = 199 - props.eventDescription.length;
+    setTextRemaining(setRemainder);
+    if (textRemaining < 50) {
+      setDisplayRemaining(true);
+    }
+    props.setEventDescription(data);
+  };
+  return (
+    <View
+      style={{
+        flex: 1,
+        width: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <UniversalOverlay
+        textMiddle={textMiddle}
+        textTop="Event Description"
+        visible={props.visible}
+        setVisible={props.setVisible}
+      />
+
+      <Card style={styles.cardStyle}>
+        <TextInput
+          placeholder="Event Description"
+          label="Tell people a little more"
+          onChangeText={(text) => validateDescription(text)}
+          keyboardType="default"
+          enablesReturnKeyAutomatically={true}
+          autoCapitalize="words"
+          autoCorrect={true}
+          maxLength={200}
+          multiline={true}
+          numberOfLines={5}
+          defaultValue={props.eventDescription}
+          style={{
+            padding: 8,
+            borderColor: "#ccc",
+            borderWidth: 1,
+            width: "100%",
+          }}
+        />
+        {displayRemaining && (
+          <Text
+            style={
+              textRemaining < 20
+                ? { color: Colors.danger }
+                : { color: Colors.defaultPrimary }
+            }
+          >
+            {textRemaining}
+          </Text>
+        )}
+        <View>
+          <Button
+            bordered
+            style={AppConstants.defaultButtonStyle}
+            onPress={() => props.setFormStep(5)}
+          >
+            <Text style={AppConstants.defaultButtonTextStyle}>Continue</Text>
+          </Button>
+          <Button
+            bordered
+            dark
+            block
+            style={AppConstants.defaultBackButtonStyle}
+            onPress={() => props.setFormStep(3)}
           >
             <Text style={AppConstants.defaultBackButtonTextStyle}>Back</Text>
           </Button>

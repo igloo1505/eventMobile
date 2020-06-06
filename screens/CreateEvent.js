@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import Colors from "../constants/Colors";
+import moment from "moment";
 import {
   View,
   Text,
@@ -14,14 +15,25 @@ import {
 import {
   CreateEventForm1,
   CreateEventForm2,
+  CreateEventForm3,
+  CreateEventForm4,
 } from "../components/CreateEventFormList";
 
 const CreateEvent = (props) => {
+  let today = new Date();
+  let todayString = moment(today).format("MM-DD-YYYY");
+
+  const [dateString, setDateString] = useState(todayString);
   const [formStep, setFormStep] = useState(1);
+  const [showDateTime, setShowDateTime] = useState(1);
   const [visible, setVisible] = useState(true);
+  const [visible2, setVisible2] = useState(true);
   const [eventName, setEventName] = useState("");
   const [eventType, setEventType] = useState("Event Type");
   const [eventTags, setEventTags] = useState([]);
+  const [date, setDate] = useState(today.toUTCString());
+  const [eventDescription, setEventDescription] = useState("");
+  const [time, setTime] = useState(null);
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -61,6 +73,28 @@ const CreateEvent = (props) => {
                 setFormStep={setFormStep}
                 eventTags={eventTags}
                 setEventTags={setEventTags}
+              />
+            )}
+            {formStep === 3 && (
+              <CreateEventForm3
+                setFormStep={setFormStep}
+                date={date}
+                dateString={dateString}
+                setDateString={setDateString}
+                time={time}
+                setDate={setDate}
+                setTime={setTime}
+                showDateTime={showDateTime}
+                setShowDateTime={setShowDateTime}
+              />
+            )}
+            {formStep === 4 && (
+              <CreateEventForm4
+                setFormStep={setFormStep}
+                visible={visible2}
+                setVisible={setVisible2}
+                eventDescription={eventDescription}
+                setEventDescription={setEventDescription}
               />
             )}
           </View>
