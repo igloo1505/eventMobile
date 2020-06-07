@@ -140,6 +140,7 @@ export const CreateEventTree = () => {
 
 const AuthedAdminDrawer = createDrawerNavigator();
 export const AdminDrawer = () => {
+  const dispatch = useDispatch();
   return (
     <AuthedAdminDrawer.Navigator
       drawerContent={(props) => {

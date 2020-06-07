@@ -27,7 +27,8 @@ enableScreens();
 const App = () => {
   const isLoadingComplete = useCachedResources();
   if (AsyncStorage.token) {
-    setAuthToken(AsyncStorage.token);
+    console.log(AsyncStorage.token);
+    setAuthToken(AsyncStorage.getItem("token"));
   }
 
   if (!isLoadingComplete) {

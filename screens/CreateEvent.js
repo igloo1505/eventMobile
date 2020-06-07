@@ -12,14 +12,17 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
 } from "react-native";
+import { registerEvent } from "../actions/eventActions";
 import {
   CreateEventForm1,
   CreateEventForm2,
   CreateEventForm3,
   CreateEventForm4,
+  CreateEventForm5,
 } from "../components/CreateEventFormList";
+import { useSelector, connect } from "react-redux";
 
-const CreateEvent = (props) => {
+const CreateEvent = ({ props, registerEvent }) => {
   let today = new Date();
   let todayString = moment(today).format("MM-DD-YYYY");
 
@@ -34,6 +37,36 @@ const CreateEvent = (props) => {
   const [date, setDate] = useState(today.toUTCString());
   const [eventDescription, setEventDescription] = useState("");
   const [time, setTime] = useState(null);
+  const [timeString, setTimeString] = useState("18:00");
+  const [location, setLocation] = useState({});
+  const [socialDistanceFriendly, setSocialDistanceFriendly] = useState(false);
+  let userEmail = useSelector((state) => state.user.user.email);
+  let user_id = useSelector((state) => state.user.user._id);
+
+  const HandleFinalSubmit = () => {
+    console.log(location);
+    let readyToSubmit = {
+      eventName,
+      eventType,
+      eventTags,
+      eventDateTime: {
+        date,
+        time,
+      },
+      socialDistanceFriendly,
+      submittedBy: {
+        email: userEmail,
+        user_id: user_id,
+      },
+      eventDescription,
+      eventLocation: {
+        location: location,
+      },
+    };
+
+    registerEvent(readyToSubmit);
+  };
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -84,6 +117,8 @@ const CreateEvent = (props) => {
                 time={time}
                 setDate={setDate}
                 setTime={setTime}
+                timeString={timeString}
+                setTimeString={setTimeString}
                 showDateTime={showDateTime}
                 setShowDateTime={setShowDateTime}
               />
@@ -97,6 +132,21 @@ const CreateEvent = (props) => {
                 setEventDescription={setEventDescription}
               />
             )}
+            {formStep === 5 && (
+              <CreateEventForm5
+                setFormStep={setFormStep}
+                eventDescription={eventDescription}
+                dateString={dateString}
+                eventName={eventName}
+                eventType={eventType}
+                eventTags={eventTags}
+                eventDescription={eventDescription}
+                eventTime={time}
+                location={location}
+                setLocation={setLocation}
+                HandleFinalSubmit={HandleFinalSubmit}
+              />
+            )}
           </View>
         </LinearGradient>
       </TouchableWithoutFeedback>
@@ -104,7 +154,13 @@ const CreateEvent = (props) => {
   );
 };
 
-export default CreateEvent;
+const mapStateToProps = (state, ownProps) => ({
+  user: state.user,
+  props: ownProps,
+});
+
+export default connect(mapStateToProps, { registerEvent })(CreateEvent);
+
 const styles = StyleSheet.create({
   formStyle: {
     flex: 1,

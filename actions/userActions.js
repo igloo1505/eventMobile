@@ -1,12 +1,9 @@
 import {
-  SET_USER,
   SET_LOADING,
   USER_ERROR,
   LOGIN,
-  EDIT_ACCESS,
   REGISTER_USER,
   REGISTER_ADMIN,
-  CHANGE_VIEW,
   LOGOUT,
   TRIED_AUTO_LOGIN,
 } from "./Types";
@@ -20,19 +17,6 @@ const config = {
     "Content-Type": "application/json",
   },
 };
-export const loadUser = () => async (dispatch) => {
-  setAuthToken(AsyncStorage.token);
-  try {
-    const res = await axios.get("/auth");
-    dispatch({
-      type: SET_USER,
-      payload: res.data,
-    });
-  } catch (err) {
-    console.error(err);
-    dispatch({ type: USER_ERROR, payload: err });
-  }
-};
 
 export const setTriedAutoLogin = () => {
   dispatch({ type: TRIED_AUTO_LOGIN });
@@ -40,7 +24,7 @@ export const setTriedAutoLogin = () => {
 
 export const submitNewUser = (user) => async (dispatch) => {
   // debugger;
-  setLoading();
+  setLoading(true);
   try {
     const res = await axios.post(
       `${appConstants.serverRoot}/registerUser/user`,
@@ -52,7 +36,6 @@ export const submitNewUser = (user) => async (dispatch) => {
       type: REGISTER_USER,
       payload: res.data,
     });
-    // loadUser();
   } catch (error) {
     console.log(error);
     dispatch({
@@ -62,7 +45,7 @@ export const submitNewUser = (user) => async (dispatch) => {
   }
 };
 export const submitNewAdminUser = (user) => async (dispatch) => {
-  setLoading();
+  setLoading(true);
   try {
     const res = await axios.post(
       `${appConstants.serverRoot}/registerUser/userAdmin`,
@@ -74,7 +57,6 @@ export const submitNewAdminUser = (user) => async (dispatch) => {
       type: REGISTER_ADMIN,
       payload: res.data,
     });
-    // loadUser();
   } catch (error) {
     console.error(error);
     dispatch({
@@ -92,28 +74,9 @@ export const switchToAdminRegister = (data) => async (dispatch) => {
   });
 };
 
-export const editUserAccess = ({ orgInfo }) => async (dispatch) => {
-  const res = await axios.put(
-    `/organizations/${orgInfo.organizationReference}`,
-    orgInfo,
-    config
-  );
-
-  try {
-    dispatch({
-      type: EDIT_ACCESS,
-      payload: res.data,
-    });
-  } catch (error) {
-    dispatch({
-      type: USER_ERROR,
-      payload: error,
-    });
-  }
-};
-
 export const loginUser = (user) => async (dispatch) => {
   console.log("logging in as ", user);
+  setLoading(true);
   try {
     console.log("serverRoot", `${appConstants.serverRoot}/auth`);
     const res = await axios.post(
@@ -126,7 +89,6 @@ export const loginUser = (user) => async (dispatch) => {
       type: LOGIN,
       payload: res.data,
     });
-    // loadUser();
   } catch (err) {
     console.error(err);
     dispatch({
@@ -136,15 +98,10 @@ export const loginUser = (user) => async (dispatch) => {
   }
 };
 
-export const setMenuView = (key) => (dispatch) =>
-  dispatch({
-    type: CHANGE_VIEW,
-    payload: key,
-  });
-
-export const setLoading = () => {
+export const setLoading = (loadingState) => {
   return {
     type: SET_LOADING,
+    payload: loadingState,
   };
 };
 

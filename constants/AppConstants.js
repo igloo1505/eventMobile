@@ -63,6 +63,17 @@ export default {
     borderRadius: 10,
     backgroundColor: "white",
   },
+  defaultConfirmCard: {
+    marginVertical: 6,
+    width: "100%",
+    textAlign: "center",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  defaultConfirmText: {
+    textAlign: "center",
+    paddingVertical: 5,
+  },
   defaultButtonStyle: {
     alignItems: "center",
     justifyContent: "center",

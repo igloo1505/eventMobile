@@ -12,8 +12,6 @@ import {
   TRIED_AUTO_LOGIN,
   AUTHENTICATED,
 } from "./Types";
-
-import { loadUser } from "./userActions";
 import setAuthToken from "../setToken";
 import { AsyncStorage } from "react-native";
 
@@ -34,12 +32,7 @@ export default (state = initialState, action) => {
     case SET_LOADING:
       return {
         ...state,
-        loading: true,
-      };
-    case CHANGE_VIEW:
-      return {
-        ...state,
-        menuKey: action.payload,
+        loading: action.payload,
       };
     case REGISTER_USER:
       setAuthToken(action.payload.token);
@@ -67,13 +60,6 @@ export default (state = initialState, action) => {
         loading: false,
       };
 
-    case SET_USER:
-      return {
-        ...state,
-        user: action.payload,
-        loggedIn: true,
-        loading: false,
-      };
     case TRIED_AUTO_LOGIN:
       return {
         ...state,
@@ -82,21 +68,13 @@ export default (state = initialState, action) => {
     case LOGIN:
       console.log("payload", action.payload);
       AsyncStorage.setItem("token", action.payload.token);
-      // loadUser();
-
+      setAuthToken(action.payload.token);
       return {
         ...state,
         token: action.payload.token,
         user: action.payload.user,
         loggedIn: true,
         triedAutoLogin: true,
-        loading: false,
-      };
-
-    case EDIT_ACCESS:
-      return {
-        ...state,
-        organization: action.payload,
         loading: false,
       };
     case LOGOUT:
@@ -109,14 +87,6 @@ export default (state = initialState, action) => {
         user: null,
         triedAutoLogin: false,
         error: null,
-        loading: false,
-      };
-
-    case AUTHENTICATED:
-      return {
-        ...state,
-        loggedIn: true,
-        user: action.payload,
         loading: false,
       };
     case USER_ERROR:

@@ -10,6 +10,7 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
 } from "react-native";
+import { connect, useSelector } from "react-redux";
 import moment from "moment";
 import EventTypeDropdown from "./EventTypeDropdown";
 import { Button } from "native-base";
@@ -174,6 +175,17 @@ export const CreateEventForm3 = (props) => {
       props.setDate(new Date(utc));
     } else if (mode === "time") {
       props.setTime(data);
+      props.setTimeString(moment(data).format("hh:mm a"));
+    }
+  };
+  const validateDateTimeInput = () => {
+    if (props.time === null || props.time === undefined) {
+      Alert.alert(
+        "Wait a second.",
+        "Please set a time for the event to start."
+      );
+    } else {
+      props.setFormStep(4);
     }
   };
 
@@ -203,13 +215,15 @@ export const CreateEventForm3 = (props) => {
           />
         </View>
 
-        <Text>Date: {props.dateString} </Text>
+        <Text>
+          Date: {mode === "date" ? props.dateString : props.timeString}{" "}
+        </Text>
         <View>
           <Button
             bordered
             style={AppConstants.defaultButtonStyle}
             onPress={() => {
-              mode === "date" ? setMode("time") : props.setFormStep(4);
+              mode === "date" ? setMode("time") : validateDateTimeInput();
             }}
           >
             {mode === "date" ? (
@@ -246,8 +260,6 @@ export const CreateEventForm4 = (props) => {
   const textMiddle =
     "Now's your chance to tell people a little more about your event.";
   const validateDescription = (data) => {
-    console.log(props.eventDescription.length);
-    console.log(textRemaining);
     let setRemainder = 199 - props.eventDescription.length;
     setTextRemaining(setRemainder);
     if (textRemaining < 50) {
@@ -310,6 +322,158 @@ export const CreateEventForm4 = (props) => {
           >
             <Text style={AppConstants.defaultButtonTextStyle}>Continue</Text>
           </Button>
+          <Button
+            bordered
+            dark
+            block
+            style={AppConstants.defaultBackButtonStyle}
+            onPress={() => props.setFormStep(3)}
+          >
+            <Text style={AppConstants.defaultBackButtonTextStyle}>Back</Text>
+          </Button>
+        </View>
+      </Card>
+    </View>
+  );
+};
+
+export const CreateEventForm5 = (props) => {
+  const user = useSelector((state) => state.user.user);
+  const locationFromState = useSelector(
+    (state) => state.user.user.organization.location
+  );
+  const {
+    organization: {
+      businessName,
+      businessType,
+      location: {
+        business_address,
+        business_city,
+        business_state,
+        business_zip,
+        business_unit,
+      },
+    },
+  } = user;
+  const useDefault = () => {
+    console.log("event triggered");
+    console.log("From State", locationFromState);
+    let LocationHolder = {};
+    LocationHolder.city = locationFromState.business_city;
+    LocationHolder.state = locationFromState.business_state;
+    LocationHolder.zipCode = locationFromState.business_zip;
+    LocationHolder.unit = locationFromState.business_unit;
+    LocationHolder.streetAddress = locationFromState.business_address;
+    console.log("locationHolder", LocationHolder);
+    props.setLocation(LocationHolder);
+    props.HandleFinalSubmit();
+  };
+  return (
+    <View
+      style={{
+        flex: 1,
+        width: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Card style={styles.cardStyle}>
+        <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 20 }}>
+          Use This Location?
+        </Text>
+        <View style={AppConstants.defaultConfirmCard}>
+          <Text style={AppConstants.defaultConfirmText}>{businessName}</Text>
+        </View>
+        <View style={AppConstants.defaultConfirmCard}>
+          <Text style={AppConstants.defaultConfirmText}>
+            {business_address}
+          </Text>
+        </View>
+        <View style={(AppConstants.defaultConfirmCard, { marginBottom: 20 })}>
+          <Text style={AppConstants.defaultConfirmText}>
+            {business_city}, {business_state}
+          </Text>
+        </View>
+
+        <View>
+          <View style={{ flexDirection: "row", marginVertical: 10 }}>
+            <Button
+              bordered
+              style={
+                (AppConstants.defaultButtonStyle, { marginHorizontal: 10 })
+              }
+              onPress={() => props.setFormStep(5)}
+            >
+              <Text style={AppConstants.defaultButtonTextStyle}>
+                Set Another
+              </Text>
+            </Button>
+            <Button
+              bordered
+              style={
+                (AppConstants.defaultButtonStyle, { marginHorizontal: 10 })
+              }
+              onPress={() => useDefault()}
+            >
+              <Text style={AppConstants.defaultButtonTextStyle}>
+                This works
+              </Text>
+            </Button>
+          </View>
+          <Button
+            bordered
+            dark
+            block
+            style={AppConstants.defaultBackButtonStyle}
+            onPress={() => props.setFormStep(4)}
+          >
+            <Text style={AppConstants.defaultBackButtonTextStyle}>Back</Text>
+          </Button>
+        </View>
+      </Card>
+    </View>
+  );
+};
+
+export const CreateEventForm6 = (props) => {
+  return (
+    <View
+      style={{
+        flex: 1,
+        width: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <UniversalOverlay
+        textMiddle={textMiddle}
+        textTop="Event Description"
+        visible={props.visible}
+        setVisible={props.setVisible}
+      />
+
+      <Card style={styles.cardStyle}>
+        <View>
+          <View>
+            <Button
+              bordered
+              style={AppConstants.defaultButtonStyle}
+              onPress={() => props.setFormStep(5)}
+            >
+              <Text style={AppConstants.defaultButtonTextStyle}>
+                Use this one
+              </Text>
+            </Button>
+            <Button
+              bordered
+              style={AppConstants.defaultButtonStyle}
+              onPress={() => props.setFormStep(5)}
+            >
+              <Text style={AppConstants.defaultButtonTextStyle}>
+                Set Another
+              </Text>
+            </Button>
+          </View>
           <Button
             bordered
             dark
