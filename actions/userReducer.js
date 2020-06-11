@@ -14,15 +14,14 @@ import {
 } from "./Types";
 import setAuthToken from "../setToken";
 import { AsyncStorage } from "react-native";
+import { Alert } from "react-native";
 
 const initialState = {
   loggedIn: false,
   token: AsyncStorage.getItem("token"),
-  leaders: null,
   loading: false,
   admin: false,
   user: null,
-  userAdminDataHolder: null,
   triedAutoLogin: false,
   error: null,
 };
@@ -66,7 +65,6 @@ export default (state = initialState, action) => {
         triedAutoLogin: true,
       };
     case LOGIN:
-      console.log("payload", action.payload);
       AsyncStorage.setItem("token", action.payload.token);
       setAuthToken(action.payload.token);
       return {
@@ -82,7 +80,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loggedIn: false,
-        leaders: null,
+        token: null,
         admin: false,
         user: null,
         triedAutoLogin: false,
@@ -90,7 +88,7 @@ export default (state = initialState, action) => {
         loading: false,
       };
     case USER_ERROR:
-      console.error("at reducer...", action.payload);
+      Alert.alert("An error occured", action.payload.data);
       return {
         ...state,
         error: action.payload,

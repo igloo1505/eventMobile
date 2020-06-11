@@ -8,7 +8,7 @@ import {
   StyleSheet,
   Platform,
 } from "react-native";
-import { SIGN_UP_FORM } from "../actions/Types";
+import { SIGN_UP_FORM, SET_LOADING } from "../actions/Types";
 import { Input } from "react-native-elements";
 import { useDispatch } from "react-redux";
 import { connect } from "react-redux";
@@ -18,6 +18,7 @@ import { AntDesign } from "@expo/vector-icons";
 import Card from "../components/UI/Card";
 import { LinearGradient } from "expo-linear-gradient";
 import { loginUser } from "../actions/userActions";
+
 // import Input from "../components/UI/Input";
 import Colors from "../constants/Colors";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -35,9 +36,9 @@ const SignInForm = ({ user, loginUser }, props) => {
   const handleSubmit = () => {
     let User = { email, password };
     console.log("Login User", User);
+    dispatch({ type: SET_LOADING, payload: true });
     loginUser(User);
   };
-  console.log("props", props);
 
   return (
     <KeyboardAvoidingView

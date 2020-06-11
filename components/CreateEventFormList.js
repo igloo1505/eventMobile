@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -77,7 +77,6 @@ export const CreateEventForm2 = (props) => {
     setCurrentTag("");
   };
   const handleDeleteTag = (tag) => {
-    console.log(tag);
     props.setEventTags(props.eventTags.filter((t) => t !== tag.tag));
   };
 
@@ -166,11 +165,14 @@ export const CreateEventForm2 = (props) => {
 
 export const CreateEventForm3 = (props) => {
   const [mode, setMode] = useState("date");
+  useEffect(() => {
+    props.setTimeString(moment(props.date).format("hh:mm a"));
+    props.setTime(props.date);
+  }, []);
 
   const handleDateInput = (data) => {
     if (mode === "date") {
       let utc = moment(data).utc();
-      console.log(utc);
       props.setDateString(moment(data).utc().calendar());
       props.setDate(new Date(utc));
     } else if (mode === "time") {
@@ -338,6 +340,7 @@ export const CreateEventForm4 = (props) => {
 };
 
 export const CreateEventForm5 = (props) => {
+  console.log(props);
   const user = useSelector((state) => state.user.user);
   const locationFromState = useSelector(
     (state) => state.user.user.organization.location
@@ -356,17 +359,17 @@ export const CreateEventForm5 = (props) => {
     },
   } = user;
   const useDefault = () => {
-    console.log("event triggered");
-    console.log("From State", locationFromState);
     let LocationHolder = {};
     LocationHolder.city = locationFromState.business_city;
     LocationHolder.state = locationFromState.business_state;
     LocationHolder.zipCode = locationFromState.business_zip;
     LocationHolder.unit = locationFromState.business_unit;
     LocationHolder.streetAddress = locationFromState.business_address;
-    console.log("locationHolder", LocationHolder);
     props.setLocation(LocationHolder);
     props.HandleFinalSubmit();
+    setTimeout(() => {
+      props.navigation.navigate("By Neighborhood");
+    }, 1500);
   };
   return (
     <View
@@ -399,10 +402,8 @@ export const CreateEventForm5 = (props) => {
           <View style={{ flexDirection: "row", marginVertical: 10 }}>
             <Button
               bordered
-              style={
-                (AppConstants.defaultButtonStyle, { marginHorizontal: 10 })
-              }
-              onPress={() => props.setFormStep(5)}
+              style={(AppConstants.defaultButtonStyle, { marginRight: 10 })}
+              onPress={() => props.setFormStep(6)}
             >
               <Text style={AppConstants.defaultButtonTextStyle}>
                 Set Another
@@ -410,9 +411,7 @@ export const CreateEventForm5 = (props) => {
             </Button>
             <Button
               bordered
-              style={
-                (AppConstants.defaultButtonStyle, { marginHorizontal: 10 })
-              }
+              style={(AppConstants.defaultButtonStyle, { marginLeft: 10 })}
               onPress={() => useDefault()}
             >
               <Text style={AppConstants.defaultButtonTextStyle}>

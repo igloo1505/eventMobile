@@ -20,6 +20,7 @@ import {
   CreateEventForm4,
   CreateEventForm5,
 } from "../components/CreateEventFormList";
+import SetDifferent2, { SetDifferent1 } from "../components/DifferentLocation";
 import { useSelector, connect } from "react-redux";
 
 const CreateEvent = ({ props, registerEvent }) => {
@@ -38,13 +39,39 @@ const CreateEvent = ({ props, registerEvent }) => {
   const [eventDescription, setEventDescription] = useState("");
   const [time, setTime] = useState(null);
   const [timeString, setTimeString] = useState("18:00");
-  const [location, setLocation] = useState({});
+  const [location, setLocation] = useState(null);
   const [socialDistanceFriendly, setSocialDistanceFriendly] = useState(false);
+  const [newCity, setNewCity] = useState("");
+  const [newState, setNewState] = useState("");
+  const [newStreetAddress, setNewStreetAddress] = useState("");
+  const [newZip, setNewZip] = useState("");
+  const [newUnit, setNewUnit] = useState("");
   let userEmail = useSelector((state) => state.user.user.email);
   let user_id = useSelector((state) => state.user.user._id);
 
+  const resetState = () => {
+    setFormStep(1);
+    setDateString(todayString);
+    setShowDateTime(1);
+    setVisible(true);
+    setVisible2(true);
+    setEventName("");
+    setEventType("Event Type");
+    setEventTags([]);
+    setDate(today.toUTCString());
+    setEventDescription("");
+    setTime(null);
+    setTimeString("18:00");
+    setLocation({});
+    setSocialDistanceFriendly(false);
+    setNewCity("");
+    setNewState("");
+    setNewStreetAddress("");
+    setNewZip("");
+    setNewUnit("");
+  };
+
   const HandleFinalSubmit = () => {
-    console.log(location);
     let readyToSubmit = {
       eventName,
       eventType,
@@ -63,8 +90,37 @@ const CreateEvent = ({ props, registerEvent }) => {
         location: location,
       },
     };
-
     registerEvent(readyToSubmit);
+    props.navigation.navigate("By Neighborhood");
+    resetState();
+  };
+  const handleSubmitNewLocation = () => {
+    let newLocation = {};
+    newLocation.city = newCity;
+    newLocation.state = newState;
+    newLocation.zipCode = newZip;
+    newLocation.streetAddress = newStreetAddress;
+    newLocation.unit = newUnit;
+    let readyToSubmit = {
+      eventName,
+      eventType,
+      eventTags,
+      eventDateTime: {
+        date,
+        time,
+      },
+      socialDistanceFriendly,
+      submittedBy: {
+        email: userEmail,
+        user_id: user_id,
+      },
+      eventDescription,
+      eventLocation: {
+        location: newLocation,
+      },
+    };
+    registerEvent(readyToSubmit);
+    resetState();
   };
 
   return (
@@ -144,7 +200,30 @@ const CreateEvent = ({ props, registerEvent }) => {
                 eventTime={time}
                 location={location}
                 setLocation={setLocation}
+                navigation={props.navigation}
                 HandleFinalSubmit={HandleFinalSubmit}
+              />
+            )}
+            {formStep === 6 && (
+              <SetDifferent1
+                setFormStep={setFormStep}
+                setNewCity={setNewCity}
+                newCity={newCity}
+                newState={newState}
+                setNewState={setNewState}
+                handleSubmitNewLocation={handleSubmitNewLocation}
+                newZip={newZip}
+                setNewZip={setNewZip}
+              />
+            )}
+            {formStep === 7 && (
+              <SetDifferent2
+                setNewStreetAddress={setNewStreetAddress}
+                newStreetAddress={newStreetAddress}
+                newUnit={newUnit}
+                setNewUnit={setNewUnit}
+                handleSubmitNewLocation={handleSubmitNewLocation}
+                navigation={props.navigation}
               />
             )}
           </View>

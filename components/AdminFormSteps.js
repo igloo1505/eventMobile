@@ -62,7 +62,7 @@ const AdminFormSteps = ({
       city,
       state,
     };
-    console.log(newAdmin);
+
     submitNewAdminUser(newAdmin);
   };
 

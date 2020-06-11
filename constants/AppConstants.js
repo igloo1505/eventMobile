@@ -11,7 +11,7 @@ import {
 import Colors from "./Colors";
 
 export default {
-  serverRoot: "https://41bf57b9faac.ngrok.io",
+  serverRoot: "https://f02468f7fa26.ngrok.io",
   drawerOptions: {
     drawerIcon: (props) => {
       <Ionicons
@@ -22,7 +22,7 @@ export default {
     },
   },
   neighborhoodArray: [
-    new Neighborhood("1", "RiverWest", "#f5428d"),
+    new Neighborhood("1", "River West", "#f5428d"),
     new Neighborhood("2", "Brady Street", "#f54242"),
     new Neighborhood("3", "Third Ward", "#f5a442"),
     new Neighborhood("4", "Brewers Hill", "#f5d142"),

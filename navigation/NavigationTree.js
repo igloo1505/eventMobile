@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Landing from "../screens/Landing";
 import { View, Text, Button, SafeAreaView } from "react-native";
 import { LOGOUT } from "../actions/Types";
@@ -19,6 +19,7 @@ import AuthenticatedNavigator from "./AuthenticatedNavigator";
 import AboutScreen from "../screens/About";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { createStackNavigator } from "@react-navigation/stack";
+import { Spinner } from "native-base";
 import {
   createDrawerNavigator,
   DrawerItemList,
@@ -76,6 +77,11 @@ export const AdminRegisterStack = (props) => {
 
 const NeighborhoodStack = createStackNavigator();
 export const ByNeighborhoodStack = (props) => {
+  const {
+    navigation,
+    route: { params },
+  } = props;
+
   return (
     <NeighborhoodStack.Navigator>
       <NeighborhoodStack.Screen
@@ -86,15 +92,6 @@ export const ByNeighborhoodStack = (props) => {
       <NeighborhoodStack.Screen
         name="ByNeighborhoodDetail"
         component={ByIndividualNeighborhood}
-        options={{
-          headerTitle: "Event Driven MKE",
-          headerStyle: {
-            backgroundColor: Colors.primaryColor,
-            borderBottomWidth: 1,
-            borderBottomColor: "#ccc",
-          },
-          headerTintColor: Colors.textColor,
-        }}
       />
     </NeighborhoodStack.Navigator>
   );
@@ -126,12 +123,13 @@ export const AuthedTree = (props) => {
 };
 const CreateEventStack = createStackNavigator();
 
-export const CreateEventTree = () => {
+export const CreateEventTree = (props) => {
   return (
     <CreateEventStack.Navigator>
       <CreateEventStack.Screen
         name="Create Event"
         component={CreateEvent}
+        props={props}
         options={DefaultNavOptions}
       />
     </CreateEventStack.Navigator>
@@ -141,6 +139,7 @@ export const CreateEventTree = () => {
 const AuthedAdminDrawer = createDrawerNavigator();
 export const AdminDrawer = () => {
   const dispatch = useDispatch();
+
   return (
     <AuthedAdminDrawer.Navigator
       drawerContent={(props) => {
@@ -269,27 +268,34 @@ export const LoginDrawer = () => {
   );
 };
 
-const NavigationSwitcher = ({ user, props }) => {
+const NavigationSwitcher = ({ user, loading, props }) => {
   let isAdmin;
-  console.log(user);
   let isAuthenticated = user.loggedIn;
   if (user.loggedIn) {
     isAdmin = user.user.admin;
   } else if (!user.loggedIn) {
     isAdmin = false;
   }
-
-  return (
-    <NavigationContainer>
-      {isAuthenticated && isAdmin && <AdminDrawer />}
-      {isAuthenticated && !isAdmin && <AuthedDrawer />}
-      {!isAuthenticated && !isAdmin && <LoginDrawer />}
-    </NavigationContainer>
-  );
+  if (!loading) {
+    return (
+      <NavigationContainer>
+        {isAuthenticated && isAdmin && <AdminDrawer />}
+        {isAuthenticated && !isAdmin && <AuthedDrawer />}
+        {!isAuthenticated && !isAdmin && <LoginDrawer />}
+      </NavigationContainer>
+    );
+  } else if (loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center" }}>
+        <Spinner color={Colors.primaryColor} />
+      </View>
+    );
+  }
 };
 
 const mapStateToProps = (state, ownProps) => ({
   user: state.user,
+  loading: state.user.loading,
   props: ownProps,
 });
 

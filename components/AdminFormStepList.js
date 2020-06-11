@@ -22,7 +22,7 @@ import UniversalOverlay from "./AdminSwitchOverlay";
 
 export const AdminFormStep1 = (props) => {
   const [dropDownText, setDropDownText] = useState("Business Type");
-  console.log(props);
+
   const evaluateNameInput = () => {
     if (props.businessName.length < 6) {
       Alert.alert(
@@ -246,104 +246,38 @@ export const ConfirmAdminInfo = (props) => {
   return (
     <View style={{ flex: 1, width: "100%", justifyContent: "center" }}>
       <Card style={styles.cardStyle}>
-        <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 20 }}>
-          Details:
-        </Text>
-        <View
-          style={{
-            marginVertical: 6,
-
-            width: "100%",
-            textAlign: "center",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Text style={{ textAlign: "center", paddingVertical: 5 }}>
+        <View style={AppConstants.defaultConfirmCard}>
+          <Text style={AppConstants.defaultConfirmText}>
             {props.businessName}
           </Text>
         </View>
-        <View
-          style={{
-            marginVertical: 6,
-
-            width: "100%",
-            textAlign: "center",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Text style={{ textAlign: "center", paddingVertical: 5 }}>
+        <View style={AppConstants.defaultConfirmCard}>
+          <Text style={AppConstants.defaultConfirmText}>
             {props.businessType}
           </Text>
         </View>
-        <View
-          style={{
-            marginVertical: 6,
-
-            width: "100%",
-            textAlign: "center",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Text style={{ textAlign: "center", paddingVertical: 5 }}>
+        <View style={AppConstants.defaultConfirmCard}>
+          <Text style={AppConstants.defaultConfirmText}>
             {props.businessStreetAddress}
           </Text>
         </View>
-        <View
-          style={{
-            marginVertical: 6,
-
-            width: "100%",
-            textAlign: "center",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Text style={{ textAlign: "center", paddingVertical: 5 }}>
+        <View style={AppConstants.defaultConfirmCard}>
+          <Text style={AppConstants.defaultConfirmText}>
             {props.businessCity}
           </Text>
         </View>
-        <View
-          style={{
-            marginVertical: 6,
-
-            width: "100%",
-            textAlign: "center",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Text style={{ textAlign: "center", paddingVertical: 5 }}>
+        <View style={AppConstants.defaultConfirmCard}>
+          <Text style={AppConstants.defaultConfirmText}>
             {props.businessState}
           </Text>
         </View>
-        <View
-          style={{
-            marginVertical: 6,
-
-            width: "100%",
-            textAlign: "center",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Text style={{ textAlign: "center", paddingVertical: 5 }}>
+        <View style={AppConstants.defaultConfirmCard}>
+          <Text style={AppConstants.defaultConfirmText}>
             {props.businessZip}
           </Text>
         </View>
-        <View
-          style={{
-            marginVertical: 6,
-
-            width: "100%",
-            textAlign: "center",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Text style={{ textAlign: "center", paddingVertical: 5 }}>
+        <View style={AppConstants.defaultConfirmCard}>
+          <Text style={AppConstants.defaultConfirmText}>
             {props.businessUnit}
           </Text>
         </View>

@@ -5,8 +5,11 @@ import {
   StyleSheet,
   View,
   AsyncStorage,
+  YellowBox,
 } from "react-native";
 import { enableScreens } from "react-native-screens";
+import { Spinner } from "native-base";
+import { AppLoading } from "expo";
 import AuthScreen from "./screens/AuthScreen";
 import ViewEvents from "./screens/ViewEvents";
 import { connect } from "react-redux";
@@ -17,7 +20,6 @@ import OverLayLanding from "./components/OverLayLanding";
 import { AuthenticatedNavOptions, LoginDrawer } from "./constants/AppConstants";
 import Colors from "./constants/Colors";
 import { NavigationContainer } from "@react-navigation/native";
-
 import { LinearGradient } from "expo-linear-gradient";
 import useCachedResources from "./hooks/useCachedResources";
 import NavigationSwitcher from "./navigation/NavigationTree";
@@ -25,21 +27,16 @@ import NavigationSwitcher from "./navigation/NavigationTree";
 enableScreens();
 
 const App = () => {
-  const isLoadingComplete = useCachedResources();
+  // YellowBox.ignoreWarnings();
+  console.disableYellowBox = true;
   if (AsyncStorage.token) {
-    console.log(AsyncStorage.token);
     setAuthToken(AsyncStorage.getItem("token"));
   }
-
-  if (!isLoadingComplete) {
-    return null;
-  } else {
-    return (
-      <Provider store={store}>
-        <NavigationSwitcher />
-      </Provider>
-    );
-  }
+  return (
+    <Provider store={store}>
+      <NavigationSwitcher />
+    </Provider>
+  );
 };
 
 const styles = StyleSheet.create({

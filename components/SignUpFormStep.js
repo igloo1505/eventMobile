@@ -28,6 +28,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { loginUser } from "../actions/userActions";
 // import Input from "../components/UI/Input";
 import Colors from "../constants/Colors";
+import AppConstants from '../constants/AppConstants'
 import {
   FlatList,
   State,
@@ -295,17 +296,17 @@ export const ConfirmationScreen = (props) => {
   return (
     <Card style={styles.loginCard}>
       <ScrollView>
-        <View style={styles.confirmationTextHolder}>
-          <Text style={{ fontWeight: "bold", padding: 5 }}>Name:</Text>
-          <Text style={styles.confirmationTextStyle}>{props.name}</Text>
+        <View style={AppConstants.defaultConfirmCard}>
+          
+          <Text style={AppConstants.defaultConfirmText}>{props.name}</Text>
         </View>
-        <View style={styles.confirmationTextHolder}>
-          <Text style={{ fontWeight: "bold", padding: 5 }}>Email:</Text>
-          <Text style={styles.confirmationTextStyle}>{props.email}</Text>
+        <View style={AppConstants.defaultConfirmCard}>
+          
+          <Text style={AppConstants.defaultConfirmText}>{props.email}</Text>
         </View>
-        <View style={styles.confirmationTextHolder}>
-          <Text style={{ fontWeight: "bold", padding: 5 }}>From: </Text>
-          <Text style={styles.confirmationTextStyle}>
+        <View style={AppConstants.defaultConfirmCard}>
+          
+          <Text style={AppConstants.defaultConfirmText}>
             {props.city}, {props.state}
           </Text>
         </View>

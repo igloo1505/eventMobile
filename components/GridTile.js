@@ -3,7 +3,6 @@ import { View, ScrollView, TouchableOpacity, StyleSheet } from "react-native";
 import { Text } from "native-base";
 
 const GridTile = (props) => {
-  console.log(props);
   return (
     <TouchableOpacity onPress={props.onSelect} style={styles.gridItemStyle}>
       <View

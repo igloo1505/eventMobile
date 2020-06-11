@@ -1,4 +1,11 @@
-import { REGISTER_EVENT, EVENT_ERROR } from "./Types";
+import {
+  REGISTER_EVENT,
+  EVENT_ERROR,
+  GET_BY_NEIGHBORHOOD,
+  RESET_EVENT_STATE,
+  NO_EVENTS_FOUND,
+  SET_EVENT_LOADING,
+} from "./Types";
 import AppConstants from "../constants/AppConstants";
 import Axios from "axios";
 import { setLoading } from "./userActions";
@@ -11,7 +18,6 @@ const config = {
 };
 
 export const registerEvent = (eventData) => async (dispatch) => {
-  console.log(AsyncStorage.getItem("token"));
   setLoading(true);
   try {
     const res = await Axios.post(
@@ -19,15 +25,54 @@ export const registerEvent = (eventData) => async (dispatch) => {
       eventData,
       config
     );
-    console.log("res", res);
+    setLoading(false);
     dispatch({
       type: REGISTER_EVENT,
       payload: res.data,
     });
   } catch (error) {
+    setLoading(false);
     dispatch({
       type: EVENT_ERROR,
-      payload: error,
+      payload: error.response,
     });
   }
+};
+
+export const getByNeighborhood = (hood) => async (dispatch) => {
+  console.log("running get by neighborhood");
+  try {
+    const res = await Axios.get(
+      `${AppConstants.serverRoot}/byNeighborhood/${hood}`
+    );
+    // setLoading(false);
+    dispatch({
+      type: GET_BY_NEIGHBORHOOD,
+      payload: res.data,
+    });
+  } catch (error) {
+    if (error.response.data.msg === "No Events located for that neighborhood") {
+      dispatch({
+        type: NO_EVENTS_FOUND,
+      });
+    } else {
+      dispatch({
+        type: EVENT_ERROR,
+        payload: error.response,
+      });
+    }
+  }
+};
+
+export const setEventLoading = (loadingState) => (dispatch) => {
+  dispatch({
+    type: SET_EVENT_LOADING,
+    payload: loadingState,
+  });
+};
+
+export const resetEventState = () => (dispatch) => {
+  dispatch({
+    type: RESET_EVENT_STATE,
+  });
 };
