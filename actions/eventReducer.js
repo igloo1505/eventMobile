@@ -10,8 +10,8 @@ import {
 const initialState = {
   hasCreatedEvent: false,
   createdEvent: null,
-  neighborhoodHasData: false,
-  filteredByNeighborhood: null,
+  neighborhoodHasData: null,
+  filteredByNeighborhood: [],
   error: null,
   loading: false,
 };
@@ -31,17 +31,18 @@ export default (state = initialState, action) => {
         loading: false,
       };
     case GET_BY_NEIGHBORHOOD:
+      console.log("From By Neighborhood", action.payload);
       return {
         ...state,
         neighborhoodHasData: true,
-        filteredByNeighborhood: action.payload,
+        filteredByNeighborhood: action.payload.EventsArray,
         loading: false,
       };
     case NO_EVENTS_FOUND:
       return {
         ...state,
         neighborhoodHasData: false,
-        filteredByNeighborhood: null,
+        filteredByNeighborhood: [],
         loading: false,
       };
     case RESET_EVENT_STATE:
@@ -49,8 +50,8 @@ export default (state = initialState, action) => {
         ...state,
         hasCreatedEvent: false,
         createdEvent: null,
-        neighborhoodHasData: false,
-        filteredByNeighborhood: null,
+        neighborhoodHasData: null,
+        filteredByNeighborhood: [],
         loading: false,
         error: null,
       };

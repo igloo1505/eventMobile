@@ -76,3 +76,28 @@ export const resetEventState = () => (dispatch) => {
     type: RESET_EVENT_STATE,
   });
 };
+
+export const getDateDifference = (UTC) => {
+  let daysConstant = 1000 * 60 * 60 * 24;
+  let hoursConstant = 1000 * 60 * 60;
+  let minutesConstant = 1000 * 60;
+  let secondConstant = 1000;
+  let now = Date.now();
+  let difference = UTC - now;
+  let days = Math.floor(difference / daysConstant);
+  let afterDays = difference % daysConstant;
+  let hours = Math.floor(afterDays / hoursConstant);
+  let afterHours = afterDays % hoursConstant;
+  let minutes = Math.floor(afterHours / minutesConstant);
+  let afterMinutes = afterHours % minutesConstant;
+  let seconds = Math.floor(afterMinutes / secondConstant);
+  if (days > 0) {
+    return `${days} days, ${hours} hours`;
+  } else if (days === 0 && hours !== 0) {
+    return `${hours}:${minutes}:${seconds}`;
+  } else if (days === 0 && hours === 0) {
+    return `${minutes} & ${seconds}!!`;
+  } else if (days < 0) {
+    return `This event has passed`;
+  }
+};

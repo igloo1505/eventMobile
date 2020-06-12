@@ -4,12 +4,19 @@ import { connect } from "react-redux";
 import { Spinner } from "native-base";
 import Colors from "../constants/Colors";
 
-const NoneToDisplay = ({ eventLoading, userLoading, props }) => {
+const NoneToDisplay = ({ eventLoading, userLoading, hasEventData, props }) => {
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     console.log(eventLoading);
-    setIsLoading(eventLoading);
-  }, [eventLoading]);
+    if (!eventLoading && hasEventData) {
+      console.log("setting showlist to", true);
+      props.setShowList(true);
+    }
+    if (!eventLoading && hasEventData !== null && !hasEventData) {
+      console.log("setting eventloading to", eventLoading);
+      setIsLoading(eventLoading);
+    }
+  }, [eventLoading, hasEventData]);
   return (
     <View style={{ flex: 1 }}>
       {isLoading ? (
@@ -47,6 +54,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state, ownProps) => ({
   eventLoading: state.event.loading,
   userLoading: state.user.loading,
+  hasEventData: state.event.neighborhoodHasData,
   props: ownProps,
 });
 
