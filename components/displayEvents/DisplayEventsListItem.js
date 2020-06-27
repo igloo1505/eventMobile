@@ -7,16 +7,10 @@ import { getDateDifference } from "../../actions/eventActions";
 import { ListItem } from "react-native-elements";
 
 const DisplayEventsListItem = (props) => {
-  const [eventIn, setEventIn] = useState(null);
-  console.log(props);
-  useEffect(() => {
-    setTimeout(() => {
-      setEventIn(getDateDifference(props.event.eventDateTime.UTC));
-    }, 1000);
-    return () => {
-      console.log("clean up");
-    };
-  }, []);
+  const [eventIn, setEventIn] = useState("0");
+  setTimeout(() => {
+    setEventIn(getDateDifference(props.event.eventDateTime.UTC));
+  }, 1000);
 
   return (
     <View>

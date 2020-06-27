@@ -7,7 +7,9 @@ import Colors from "../constants/Colors";
 const NoneToDisplay = ({ eventLoading, userLoading, hasEventData, props }) => {
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
-    console.log(eventLoading);
+    console.log("event:", eventLoading);
+    console.log("user:", userLoading);
+    console.log("hasEventData:", hasEventData);
     if (!eventLoading && hasEventData) {
       console.log("setting showlist to", true);
       props.setShowList(true);
@@ -15,6 +17,9 @@ const NoneToDisplay = ({ eventLoading, userLoading, hasEventData, props }) => {
     if (!eventLoading && hasEventData !== null && !hasEventData) {
       console.log("setting eventloading to", eventLoading);
       setIsLoading(eventLoading);
+    }
+    if (!eventLoading && !userLoading && hasEventData === null) {
+      setIsLoading(false);
     }
   }, [eventLoading, hasEventData]);
   return (

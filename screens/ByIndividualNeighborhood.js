@@ -61,7 +61,7 @@ const mapStateToProps = (state, ownProps) => ({
   events: state.event,
   eventLoading: state.event.loading,
   hasEventData: state.event.neighborhoodHasData,
-  eventArray: state.event.filteredByNeighborhood,
+  eventArray: state.event.returnedEvents,
   props: ownProps,
 });
 

@@ -91,7 +91,6 @@ const CreateEvent = ({ props, registerEvent }) => {
       },
     };
     registerEvent(readyToSubmit);
-    props.navigation.navigate("By Neighborhood");
     resetState();
   };
   const handleSubmitNewLocation = () => {

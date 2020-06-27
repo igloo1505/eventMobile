@@ -11,6 +11,7 @@ import {
   LOGOUT,
   TRIED_AUTO_LOGIN,
   AUTHENTICATED,
+  DISPLAY_ERROR
 } from "./Types";
 import setAuthToken from "../setToken";
 import { AsyncStorage } from "react-native";
@@ -88,6 +89,12 @@ export default (state = initialState, action) => {
         loading: false,
       };
     case USER_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+      case DISPLAY_ERROR:
       Alert.alert("An error occured", action.payload.data);
       return {
         ...state,

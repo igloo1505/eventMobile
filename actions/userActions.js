@@ -6,6 +6,7 @@ import {
   REGISTER_ADMIN,
   LOGOUT,
   TRIED_AUTO_LOGIN,
+  DISPLAY_ERROR,
 } from "./Types";
 import appConstants from "../constants/AppConstants";
 import axios from "axios";
@@ -71,7 +72,6 @@ export const switchToAdminRegister = (data) => async (dispatch) => {
 };
 
 export const loginUser = (user) => async (dispatch) => {
-  setLoading(true);
   try {
     const res = await axios.post(
       `${appConstants.serverRoot}/auth`,
@@ -84,9 +84,10 @@ export const loginUser = (user) => async (dispatch) => {
       payload: res.data,
     });
   } catch (error) {
+    console.log(error.response);
     dispatch({
-      type: USER_ERROR,
-      payload: error.response,
+      type: DISPLAY_ERROR,
+      payload: { data: "Those credentials don't seem to be correct." },
     });
   }
 };

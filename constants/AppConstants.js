@@ -11,7 +11,7 @@ import {
 import Colors from "./Colors";
 
 export default {
-  serverRoot: "https://f02468f7fa26.ngrok.io",
+  serverRoot: "https://8cf18aa28b02.ngrok.io",
   drawerOptions: {
     drawerIcon: (props) => {
       <Ionicons
@@ -55,6 +55,7 @@ export default {
     "Hobby (other)",
     "social (other)",
   ],
+  errorToDisplayArray: ["test"],
   defaultCardStyle: {
     shadowColor: "black",
     shadowOpacity: 0.26,
@@ -107,8 +108,8 @@ export const DefaultNavOptions = (navData) => {
       borderBottomColor: "#ccc",
     },
     headerLeft: () => <HeaderButtonComponent />,
-    // headerTintColor:
-    //   Platform.OS === "android" ? Colors.textColor : Colors.primaryColor,
+    // headerTintColor:   Platform.OS === "android" ? Colors.textColor :
+    // Colors.primaryColor,
     headerTintColor: Colors.textColor,
   };
 };

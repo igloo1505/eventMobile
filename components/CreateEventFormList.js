@@ -25,19 +25,28 @@ export const CreateEventForm1 = (props) => {
     if (props.eventName.length < 5 || props.eventName.length > 15) {
       Alert.alert(
         "Woah Buddy",
-        "Make sure your name is long enough to give people an idea of what to expect. You'll be able to add a description in a second."
+        "Make sure your name is long enough to give people an idea of what to expect. You" +
+          "'ll be able to add a description in a second."
       );
     } else if (props.eventType === "Event Type") {
       Alert.alert(
         "Oh no",
-        "Make sure to pick an the most relevant event type. If you don't see a category that's close see the about page for information on how to contact us and create a new one."
+        "Make sure to pick an the most relevant event type. If you don't see a category t" +
+          "hat's close see the about page for information on how to contact us and create a" +
+          " new one."
       );
     } else {
       props.setFormStep(2);
     }
   };
   return (
-    <View style={{ flex: 1, width: "100%", justifyContent: "center" }}>
+    <View
+      style={{
+        flex: 1,
+        width: "100%",
+        justifyContent: "center",
+      }}
+    >
       <Card style={styles.cardStyle}>
         <Input
           placeholder="Event Name"
@@ -46,9 +55,15 @@ export const CreateEventForm1 = (props) => {
           keyboardType="default"
           autoCapitalize="words"
           value={props.eventName}
-          containerStyle={{ marginHorizontal: 20 }}
-          inputContainerStyle={{ marginTop: 16 }}
-          inputStyle={{ width: 150 }}
+          containerStyle={{
+            marginHorizontal: 20,
+          }}
+          inputContainerStyle={{
+            marginTop: 16,
+          }}
+          inputStyle={{
+            width: 150,
+          }}
         />
         <EventTypeDropdown
           eventType={props.eventType}
@@ -70,7 +85,9 @@ export const CreateEventForm2 = (props) => {
   let [currentTag, setCurrentTag] = useState("");
 
   const textMiddle =
-    "On this screen you can add a series of tags to help people search for events like yours. Add as many as you like. Each time you tap the next button on your keyboard a new tag is created. Tap Continue on your screen to move on.";
+    "On this screen you can add a series of tags to help people search for events lik" +
+    "e yours. Add as many as you like. Each time you tap the next button on your keyb" +
+    "oard a new tag is created. Tap Continue on your screen to move on.";
 
   const evaluateTags = () => {
     props.setEventTags([...props.eventTags, currentTag]);
@@ -114,10 +131,6 @@ export const CreateEventForm2 = (props) => {
               color: Colors.defaultPrimary,
               fontSize: 16,
               backgroundColor: "#fff",
-              //   borderColor: Colors.defaultPrimary,
-              //   borderWidth: 2,
-              borderRadius: 10,
-              overflow: "hidden",
             }}
             onPress={() => handleDeleteTag({ tag })}
           >
@@ -136,9 +149,15 @@ export const CreateEventForm2 = (props) => {
           returnKeyType="next"
           onSubmitEditing={() => evaluateTags()}
           value={currentTag}
-          containerStyle={{ marginHorizontal: 20 }}
-          inputContainerStyle={{ marginTop: 16 }}
-          inputStyle={{ width: 150 }}
+          containerStyle={{
+            marginHorizontal: 20,
+          }}
+          inputContainerStyle={{
+            marginTop: 16,
+          }}
+          inputStyle={{
+            width: 150,
+          }}
         />
         <View>
           <Button
@@ -173,7 +192,7 @@ export const CreateEventForm3 = (props) => {
   const handleDateInput = (data) => {
     if (mode === "date") {
       let utc = moment(data).utc();
-      props.setDateString(moment(data).utc().calendar());
+      props.setDateString(moment(data).format("MM-DD-YY"));
       props.setDate(new Date(utc));
     } else if (mode === "time") {
       props.setTime(data);
@@ -213,7 +232,10 @@ export const CreateEventForm3 = (props) => {
             onChange={(d) => {
               handleDateInput(d.nativeEvent.timestamp);
             }}
-            style={{ border: "5px solid red", width: 400 }}
+            style={{
+              border: "5px solid red",
+              width: 400,
+            }}
           />
         </View>
 
@@ -292,7 +314,7 @@ export const CreateEventForm4 = (props) => {
           onChangeText={(text) => validateDescription(text)}
           keyboardType="default"
           enablesReturnKeyAutomatically={true}
-          autoCapitalize="words"
+          autoCapitalize="sentences"
           autoCorrect={true}
           maxLength={200}
           multiline={true}
@@ -309,8 +331,12 @@ export const CreateEventForm4 = (props) => {
           <Text
             style={
               textRemaining < 20
-                ? { color: Colors.danger }
-                : { color: Colors.defaultPrimary }
+                ? {
+                    color: Colors.danger,
+                  }
+                : {
+                    color: Colors.defaultPrimary,
+                  }
             }
           >
             {textRemaining}
@@ -340,6 +366,7 @@ export const CreateEventForm4 = (props) => {
 };
 
 export const CreateEventForm5 = (props) => {
+  const [isVisible, setIsVisible] = useState(false);
   console.log(props);
   const user = useSelector((state) => state.user.user);
   const locationFromState = useSelector(
@@ -366,8 +393,10 @@ export const CreateEventForm5 = (props) => {
     LocationHolder.unit = locationFromState.business_unit;
     LocationHolder.streetAddress = locationFromState.business_address;
     props.setLocation(LocationHolder);
+    setIsVisible(true);
     props.HandleFinalSubmit();
     setTimeout(() => {
+      setIsVisible(false);
       props.navigation.navigate("By Neighborhood");
     }, 1500);
   };
@@ -380,8 +409,21 @@ export const CreateEventForm5 = (props) => {
         alignItems: "center",
       }}
     >
+      <UniversalOverlay
+        textMiddle="You're all set. Your event should be visible to others in a minute or two."
+        textTop="Great News!"
+        isVisible={isVisible}
+        visible={isVisible}
+        setIsVisible={setIsVisible}
+      />
       <Card style={styles.cardStyle}>
-        <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 20 }}>
+        <Text
+          style={{
+            fontSize: 20,
+            fontWeight: "bold",
+            marginBottom: 20,
+          }}
+        >
           Use This Location?
         </Text>
         <View style={AppConstants.defaultConfirmCard}>
@@ -399,7 +441,12 @@ export const CreateEventForm5 = (props) => {
         </View>
 
         <View>
-          <View style={{ flexDirection: "row", marginVertical: 10 }}>
+          <View
+            style={{
+              flexDirection: "row",
+              marginVertical: 10,
+            }}
+          >
             <Button
               bordered
               style={(AppConstants.defaultButtonStyle, { marginRight: 10 })}

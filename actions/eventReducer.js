@@ -3,7 +3,9 @@ import {
   EVENT_ERROR,
   GET_BY_NEIGHBORHOOD,
   RESET_EVENT_STATE,
+  GET_ALL_EVENTS,
   NO_EVENTS_FOUND,
+  RESET_EVENT_ARRAY,
   SET_EVENT_LOADING,
 } from "./Types";
 
@@ -11,7 +13,7 @@ const initialState = {
   hasCreatedEvent: false,
   createdEvent: null,
   neighborhoodHasData: null,
-  filteredByNeighborhood: [],
+  returnedEvents: [],
   error: null,
   loading: false,
 };
@@ -35,14 +37,22 @@ export default (state = initialState, action) => {
       return {
         ...state,
         neighborhoodHasData: true,
-        filteredByNeighborhood: action.payload.EventsArray,
+        returnedEvents: action.payload.EventsArrays,
+        loading: false,
+      };
+    case GET_ALL_EVENTS:
+      console.log("from get all events", action.payload);
+      return {
+        ...state,
+        neighborhoodHasData: true,
+        returnedEvents: action.payload.eventsArray,
         loading: false,
       };
     case NO_EVENTS_FOUND:
       return {
         ...state,
         neighborhoodHasData: false,
-        filteredByNeighborhood: [],
+        returnedEvents: [],
         loading: false,
       };
     case RESET_EVENT_STATE:
@@ -51,9 +61,15 @@ export default (state = initialState, action) => {
         hasCreatedEvent: false,
         createdEvent: null,
         neighborhoodHasData: null,
-        filteredByNeighborhood: [],
+        returnedEvents: [],
         loading: false,
         error: null,
+      };
+    case RESET_EVENT_ARRAY:
+      return {
+        ...state,
+        returnedEvents: [],
+        loading: false,
       };
     case EVENT_ERROR:
       return {
