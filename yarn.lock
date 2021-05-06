@@ -6361,9 +6361,9 @@ prop-types@15.x.x, prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, 
     react-is "^16.8.1"
 
 property-expr@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/property-expr/-/property-expr-2.0.2.tgz#fff2a43919135553a3bc2fdd94bdb841965b2330"
-  integrity sha512-bc/5ggaYZxNkFKj374aLbEDqVADdYaLcFo8XBkishUWbaAdjlphaBFns9TvRA2pUseVL/wMFmui9X3IdNDU37g==
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/property-expr/-/property-expr-2.0.4.tgz#37b925478e58965031bb612ec5b3260f8241e910"
+  integrity sha512-sFPkHQjVKheDNnPvotjQmm3KD3uk1fWKUN7CrpdbwmUx3CrG3QiM8QpTSimvig5vTXmTvjz7+TDvXOI9+4rkcg==
 
 pseudomap@^1.0.2:
   version "1.0.2"
@@ -6552,6 +6552,11 @@ react-native-keyboard-aware-scroll-view@0.9.1:
     prop-types "^15.6.2"
     react-native-iphone-x-helper "^1.0.3"
 
+react-native-linear-gradient@^2.5.6:
+  version "2.5.6"
+  resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.5.6.tgz#96215cbc5ec7a01247a20890888aa75b834d44a0"
+  integrity sha512-HDwEaXcQIuXXCV70O+bK1rizFong3wj+5Q/jSyifKFLg0VWF95xh8XQgfzXwtq0NggL9vNjPKXa016KuFu+VFg==
+
 react-native-modal@^11.5.6:
   version "11.5.6"
   resolved "https://registry.yarnpkg.com/react-native-modal/-/react-native-modal-11.5.6.tgz#bb25a78c35a5e24f45de060e5f64284397d38a87"
@@ -6614,6 +6619,13 @@ react-native-status-bar-height@^2.2.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/react-native-status-bar-height/-/react-native-status-bar-height-2.5.0.tgz#bc0fb85230603850aab9667ee8111a62954de90c"
   integrity sha512-sYBCPYA/NapBSHkdm/IVL4ID3LLlIuLqINi2FBDyMkc2BU9pfSGOtkz9yfxoK39mYJuTrlTOQ7mManARUsYDSA==
+
+react-native-touchable-scale@^2.1.1:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/react-native-touchable-scale/-/react-native-touchable-scale-2.1.2.tgz#0c34ddd2b9b7ec6a02ea114076cf8b95f6219d3b"
+  integrity sha512-0pM2GQkggP8HDqJVytQm909KpN2TqmoSv0EqVt1/9iBpJX08xnX5OvUddjXuG318KghKORRuEsiAZCwMtOmmoA==
+  dependencies:
+    prop-types "^15.6.0"
 
 react-native-vector-icons@^6.6.0:
   version "6.6.0"
