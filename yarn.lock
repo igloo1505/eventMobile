@@ -5578,10 +5578,10 @@ mkdirp@^0.5.1, mkdirp@^0.5.4:
   dependencies:
     minimist "^1.2.5"
 
-moment@^2.26.0:
-  version "2.26.0"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.26.0.tgz#5e1f82c6bafca6e83e808b30c8705eed0dcbd39a"
-  integrity sha512-oIixUO+OamkUkwjhAVE18rAMfRJNsNe/Stid/gwHSOfHrOtw9EhAY2AHvdKZ/k/MggcYELFCJz/Sn2pL8b8JMw==
+moment@^2.29.4:
+  version "2.29.4"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.4.tgz#3dbe052889fe7c1b2ed966fcb3a77328964ef108"
+  integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
 
 morgan@^1.9.0:
   version "1.10.0"
@@ -6552,6 +6552,11 @@ react-native-keyboard-aware-scroll-view@0.9.1:
     prop-types "^15.6.2"
     react-native-iphone-x-helper "^1.0.3"
 
+react-native-linear-gradient@^2.5.6:
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.6.2.tgz#56598a76832724b2afa7889747635b5c80948f38"
+  integrity sha512-Z8Xxvupsex+9BBFoSYS87bilNPWcRfRsGC0cpJk72Nxb5p2nEkGSBv73xZbEHnW2mUFvP+huYxrVvjZkr/gRjQ==
+
 react-native-modal@^11.5.6:
   version "11.5.6"
   resolved "https://registry.yarnpkg.com/react-native-modal/-/react-native-modal-11.5.6.tgz#bb25a78c35a5e24f45de060e5f64284397d38a87"
@@ -6614,6 +6619,13 @@ react-native-status-bar-height@^2.2.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/react-native-status-bar-height/-/react-native-status-bar-height-2.5.0.tgz#bc0fb85230603850aab9667ee8111a62954de90c"
   integrity sha512-sYBCPYA/NapBSHkdm/IVL4ID3LLlIuLqINi2FBDyMkc2BU9pfSGOtkz9yfxoK39mYJuTrlTOQ7mManARUsYDSA==
+
+react-native-touchable-scale@^2.1.1:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/react-native-touchable-scale/-/react-native-touchable-scale-2.1.2.tgz#0c34ddd2b9b7ec6a02ea114076cf8b95f6219d3b"
+  integrity sha512-0pM2GQkggP8HDqJVytQm909KpN2TqmoSv0EqVt1/9iBpJX08xnX5OvUddjXuG318KghKORRuEsiAZCwMtOmmoA==
+  dependencies:
+    prop-types "^15.6.0"
 
 react-native-vector-icons@^6.6.0:
   version "6.6.0"
